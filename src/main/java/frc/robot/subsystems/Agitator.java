@@ -21,7 +21,12 @@ public class Agitator extends SubsystemBase {
   public Agitator() {
 
     mMotor = new WPI_TalonSRX(Constants.kAgitatorID);
-    mMotorReadouts = Shuffleboard.getTab("Motors");
+    
+    Shuffleboard.getTab("Motors")
+      .add("Agitator", mMotor)
+      .withSize(2, 1)
+      .withPosition(0, 0)
+    ;
 
   }
 
@@ -31,6 +36,6 @@ public class Agitator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Agitator", mMotor.get());
+    
   }
 }
