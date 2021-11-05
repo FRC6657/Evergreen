@@ -6,18 +6,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
-
-  public ExampleSubsystem() {
-  }
+public class Blinkin extends SubsystemBase {
+  /** Creates a new Blinkin. */
+  public Blinkin() {}
 
   @Override
   public void periodic() {
-
-  }
-
-  @Override
-  public void simulationPeriodic() {
-
+    // This method will be called once per scheduler run
   }
 }
