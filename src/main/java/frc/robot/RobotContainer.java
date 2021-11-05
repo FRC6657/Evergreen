@@ -18,9 +18,6 @@ import frc.robot.subsystems.PDP;
 
 public class RobotContainer {
 
-  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
   private final Agitator m_agitator = new Agitator();
   private final Blinkin m_blinkin = new Blinkin();
   private final ColorSensor m_colorSensor = new ColorSensor();
