@@ -4,14 +4,33 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.Constants;
+
 public class Agitator extends SubsystemBase {
-  /** Creates a new Agitator. */
-  public Agitator() {}
+
+  private final WPI_TalonSRX mMotor;
+  ShuffleboardTab mMotorReadouts;
+
+  public Agitator() {
+
+    mMotor = new WPI_TalonSRX(Constants.kAgitatorID);
+    mMotorReadouts = Shuffleboard.getTab("Motors");
+
+  }
+
+  public void run(double pSpeed) {
+    mMotor.set(pSpeed);
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Agitator", mMotor.get());
   }
 }
