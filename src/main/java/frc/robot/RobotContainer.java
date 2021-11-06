@@ -4,12 +4,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.changeCamera;
-import frc.robot.commands.runAgitator;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.ColorSensor;
@@ -19,6 +16,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeCamera;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Outtake;
 import frc.robot.subsystems.PDP;
 
 public class RobotContainer {
@@ -32,6 +30,7 @@ public class RobotContainer {
   private final IntakeCamera mIntakeCamera = new IntakeCamera();
   private final Lift mLift = new Lift();
   private final Limelight mLimelight = new Limelight();
+  private final Outtake mOuttake = new Outtake();
   private final PDP mPDP = new PDP();
 
   private final XboxController mController = new XboxController(0);

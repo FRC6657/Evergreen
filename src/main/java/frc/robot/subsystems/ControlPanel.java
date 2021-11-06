@@ -27,13 +27,13 @@ public class ControlPanel extends SubsystemBase {
     Shuffleboard.getTab("Motors")
       .add("Control Panel Pivot", mPivotMotor)
       .withSize(2, 1)
-      .withPosition(0, 2)
+      .withPosition(0, 0)
     ;
 
     Shuffleboard.getTab("Motors")
       .add("Control Panel Spin", mSpinMotor)
       .withSize(2, 1)
-      .withPosition(0, 3)
+      .withPosition(2, 0)
     ;
 
   }

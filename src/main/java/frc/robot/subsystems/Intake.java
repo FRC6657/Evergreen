@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase {
     Shuffleboard.getTab("Motors")
       .add("Intake", mMotor)
       .withSize(2, 1)
-      .withPosition(0, 1)
+      .withPosition(2,2)
     ;
 
   }

@@ -24,7 +24,7 @@ public class Agitator extends SubsystemBase {
     Shuffleboard.getTab("Motors")
       .add("Agitator", mMotor)
       .withSize(2, 1)
-      .withPosition(0, 0)
+      .withPosition(0, 3)
     ;
 
   }
