@@ -4,14 +4,38 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.Constants;
+
 public class Intake extends SubsystemBase {
-  /** Creates a new Intake. */
-  public Intake() {}
+
+  private final WPI_TalonSRX mMotor;
+  ShuffleboardTab mMotorReadouts;
+
+  public Intake() {
+
+    mMotor = new WPI_TalonSRX(Constants.kIntakeID);
+    
+    Shuffleboard.getTab("Motors")
+      .add("Intake", mMotor)
+      .withSize(2, 1)
+      .withPosition(0, 1)
+    ;
+
+  }
+
+  public void run(double pSpeed) {
+    mMotor.set(pSpeed);
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
   }
 }
