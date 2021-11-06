@@ -21,7 +21,11 @@ public class Blinkin extends SubsystemBase {
     mBlinkin = new Spark(7);
     mBlinkin.set(0);
 
-    mColorReadouts = Shuffleboard.getTab("Color");
+    Shuffleboard.getTab("Color")
+    .add("blinkin", mBlinkin)
+    .withSize(2, 1)
+    .withPosition(0, 0)
+    ;
     
   }
 
@@ -42,7 +46,5 @@ public class Blinkin extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    
-  }
+  public void periodic() {}
 }
