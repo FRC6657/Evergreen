@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.changeCamera;
 import frc.robot.commands.runAgitator;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Blinkin;
@@ -42,8 +43,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     final JoystickButton mA = new JoystickButton(mController, XboxController.Button.kA.value);
-
-    mA.whenHeld(new runAgitator(mAgitator, 1));
 
   }
 
