@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import org.ejml.dense.block.MatrixOps_DDRB;
-
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;

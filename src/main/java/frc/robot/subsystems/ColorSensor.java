@@ -6,20 +6,16 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
-import javax.lang.model.util.ElementScanner6;
-
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.SuppliedValueWidget;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants;
-import frc.robot.Robot;
 
 public class ColorSensor extends SubsystemBase {
 
@@ -72,6 +68,6 @@ public class ColorSensor extends SubsystemBase {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "black"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "black"));
     }
-       
+
   }
 }
