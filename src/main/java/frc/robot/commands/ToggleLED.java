@@ -6,19 +6,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeCamera;
+import frc.robot.subsystems.Limelight;
 
-public class ChangeCamera extends CommandBase {
+public class ToggleLED extends CommandBase {
 
-  private final IntakeCamera mIntakeCamera;
+  private final Limelight mLimelight;
 
-  public ChangeCamera(IntakeCamera pIntakeCamera) {
-    mIntakeCamera = pIntakeCamera;
-    addRequirements(mIntakeCamera);
+  public ToggleLED(Limelight pLimelight) {
+    mLimelight = pLimelight;
+    addRequirements(mLimelight);
   }
 
   @Override
   public void initialize() {
-    System.out.println("Command Run");
-    mIntakeCamera.changeView();
+    mLimelight.toggleLED();
   }
 }

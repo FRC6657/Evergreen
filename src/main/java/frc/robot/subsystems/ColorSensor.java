@@ -29,8 +29,8 @@ public class ColorSensor extends SubsystemBase {
   private final Color kBlueTarget = ColorMatch.makeColor(.125, .422, .455);
   private final Color kYellowTarget = ColorMatch.makeColor(.316, .561, .122);
 
-  private SuppliedValueWidget<Boolean> mWidgetCurrentColor = Shuffleboard.getTab("Color").addBoolean("Current Color", () -> true);
-  private SuppliedValueWidget<Boolean> mWidgetEstimatedColor = Shuffleboard.getTab("Color").addBoolean("Estimated Color", () -> true);
+  private SuppliedValueWidget<Boolean> mWidgetCurrentColor = Shuffleboard.getTab("Color").addBoolean("Current Color", () -> true).withPosition(0, 1);
+  private SuppliedValueWidget<Boolean> mWidgetEstimatedColor = Shuffleboard.getTab("Color").addBoolean("Estimated Color", () -> true).withPosition(1, 1);
 
   public ColorSensor() {
 
