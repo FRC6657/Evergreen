@@ -20,17 +20,12 @@ public class Agitator extends SubsystemBase {
   public Agitator() {
 
     mMotor = new WPI_TalonSRX(Constants.kAgitatorID);
-    
+
     Shuffleboard.getTab("Motors").add("Agitator", mMotor).withSize(2, 1).withPosition(0, 4);
 
   }
 
   public void run(double pSpeed) {
     mMotor.set(pSpeed);
-  }
-
-  @Override
-  public void periodic() {
-
   }
 }

@@ -35,9 +35,4 @@ public class Outtake extends SubsystemBase {
     mRightMotor.set(pSpeed);
 
   }
-
-  @Override
-  public void periodic() {
-
-  }
 }

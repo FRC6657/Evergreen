@@ -40,7 +40,7 @@ public class PDP extends SubsystemBase {
         .addNumber("Total Current", () -> getTotalCurrent()).withPosition(4, 0).withSize(2, 1);
     SuppliedValueWidget<Double> mBatteryVoltage = Shuffleboard.getTab("PDP")
         .addNumber("Battery Voltage", () -> getBatteryVoltage()).withPosition(4, 1).withSize(2, 1);
-        
+
   }
 
   public double getBatteryVoltage() {
@@ -53,10 +53,5 @@ public class PDP extends SubsystemBase {
 
   public double getCurrent(int pChannel) {
     return mPDP.getCurrent(pChannel);
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

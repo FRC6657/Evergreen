@@ -44,8 +44,4 @@ public class Blinkin extends SubsystemBase {
   public void set(double pColor) {
     mBlinkin.set(pColor);
   }
-
-  @Override
-  public void periodic() {
-  }
 }

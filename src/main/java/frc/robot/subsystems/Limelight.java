@@ -67,8 +67,4 @@ public class Limelight extends SubsystemBase {
   public int getPipeline() {
     return mLimelight.getPipelineInt();
   }
-
-  @Override
-  public void periodic() {
-  }
 }

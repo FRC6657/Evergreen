@@ -28,9 +28,4 @@ public class Intake extends SubsystemBase {
   public void run(double pSpeed) {
     mMotor.set(pSpeed);
   }
-
-  @Override
-  public void periodic() {
-
-  }
 }

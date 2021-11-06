@@ -36,9 +36,4 @@ public class ControlPanel extends SubsystemBase {
   public void spin(double pSpeed) {
     mSpinMotor.set(pSpeed);
   }
-
-  @Override
-  public void periodic() {
-
-  }
 }

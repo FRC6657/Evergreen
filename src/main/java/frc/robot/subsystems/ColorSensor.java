@@ -103,6 +103,5 @@ public class ColorSensor extends SubsystemBase {
       mEstimatedColorString = "None";
       mObservedColorString = "None";
     }
-
   }
 }
