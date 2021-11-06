@@ -40,6 +40,10 @@ public class Limelight extends SubsystemBase {
     }
   }
 
+  public void setPipeline(int pPipeline){
+    mLimelight.setPipeline(pPipeline);
+  }
+
   public boolean isTargetFound() {
     return mLimelight.getIsTargetFound();
   }
@@ -58,6 +62,10 @@ public class Limelight extends SubsystemBase {
 
   public double getTargetSize() {
     return mLimelight.getTargetArea();
+  }
+
+  public int getPipeline(){
+    return mLimelight.getPipelineInt();
   }
 
   @Override
