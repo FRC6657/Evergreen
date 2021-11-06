@@ -20,12 +20,8 @@ public class Lift extends SubsystemBase {
   public Lift() {
 
     mMotor = new WPI_TalonSRX(Constants.kLiftID);
-    
-    Shuffleboard.getTab("Motors")
-      .add("Lift", mMotor)
-      .withSize(2, 1)
-      .withPosition(0, 2)
-    ;
+
+    Shuffleboard.getTab("Motors").add("Lift", mMotor).withSize(2, 1).withPosition(0, 3);
 
   }
 
@@ -35,6 +31,6 @@ public class Lift extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
   }
 }

@@ -23,22 +23,13 @@ public class Outtake extends SubsystemBase {
 
     mLeftMotor = new WPI_TalonSRX(Constants.kOuttakeLeft);
     mRightMotor = new WPI_TalonSRX(Constants.kOuttakeRight);
-    
-    Shuffleboard.getTab("Motors")
-      .add("Outtake Left", mLeftMotor)
-      .withSize(2, 1)
-      .withPosition(0, 1)
-    ;
 
-    Shuffleboard.getTab("Motors")
-      .add("Outtake Right", mRightMotor)
-      .withSize(2, 1)
-      .withPosition(2, 1)
-    ;
+    Shuffleboard.getTab("Motors").add("Outtake Left", mLeftMotor).withSize(2, 1).withPosition(0, 1);
+    Shuffleboard.getTab("Motors").add("Outtake Right", mRightMotor).withSize(2, 1).withPosition(2, 1);
 
   }
 
-  public void run(double pSpeed){
+  public void run(double pSpeed) {
 
     mLeftMotor.set(-pSpeed);
     mRightMotor.set(pSpeed);
@@ -47,6 +38,6 @@ public class Outtake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
   }
 }

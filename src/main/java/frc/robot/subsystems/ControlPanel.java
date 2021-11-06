@@ -23,18 +23,9 @@ public class ControlPanel extends SubsystemBase {
 
     mPivotMotor = new WPI_TalonSRX(Constants.kControlPanelPivot);
     mSpinMotor = new WPI_TalonSRX(Constants.kControlPanelSpin);
-    
-    Shuffleboard.getTab("Motors")
-      .add("Control Panel Pivot", mPivotMotor)
-      .withSize(2, 1)
-      .withPosition(0, 0)
-    ;
 
-    Shuffleboard.getTab("Motors")
-      .add("Control Panel Spin", mSpinMotor)
-      .withSize(2, 1)
-      .withPosition(2, 0)
-    ;
+    Shuffleboard.getTab("Motors").add("Control Panel Pivot", mPivotMotor).withSize(2, 1).withPosition(0, 0);
+    Shuffleboard.getTab("Motors").add("Control Panel Spin", mSpinMotor).withSize(2, 1).withPosition(2, 0);
 
   }
 
@@ -48,6 +39,6 @@ public class ControlPanel extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
   }
 }

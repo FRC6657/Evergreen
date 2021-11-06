@@ -20,12 +20,8 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     mMotor = new WPI_TalonSRX(Constants.kIntakeID);
-    
-    Shuffleboard.getTab("Motors")
-      .add("Intake", mMotor)
-      .withSize(2, 1)
-      .withPosition(2,2)
-    ;
+
+    Shuffleboard.getTab("Motors").add("Intake", mMotor).withSize(2, 1).withPosition(2, 3);
 
   }
 
@@ -35,6 +31,6 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
   }
 }
