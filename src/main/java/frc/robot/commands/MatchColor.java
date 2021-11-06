@@ -5,28 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.ControlPanel;
 
 public class MatchColor extends CommandBase {
- 
-  public MatchColor() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  
+  private final ControlPanel mControlPanel;
+  private final ColorSensor mColorSensor;
+  private double mSpeed;
+
+  public MatchColor(ControlPanel pControlPanel, ColorSensor pColorSensor, double pSpeed) {
+
+    mControlPanel = pControlPanel;
+    mColorSensor = pColorSensor;
+    mSpeed = pSpeed;
+
+    addRequirements(mControlPanel,mColorSensor);
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void execute() {
+    mControlPanel.spin(mSpeed);
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void end(boolean interrupted) {
+    mControlPanel.spin(0);
+  }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (mColorSensor.getEstimatedColor() == mColorSensor.getGameData());
   }
 }

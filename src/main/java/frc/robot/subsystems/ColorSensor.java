@@ -33,6 +33,9 @@ public class ColorSensor extends SubsystemBase {
   private SuppliedValueWidget<Boolean> mWidgetCurrentColor = Shuffleboard.getTab("Color").addBoolean("Current Color", () -> true).withPosition(0, 1);
   private SuppliedValueWidget<Boolean> mWidgetEstimatedColor = Shuffleboard.getTab("Color").addBoolean("Estimated Color", () -> true).withPosition(1, 1);
 
+  private String mEstimatedColorString = "Not Set";
+  private String mObservedColorString = "Not Set";
+
   public ColorSensor() {
 
     mColorSensor = new ColorSensorV3(Constants.kColorSensorPort);
@@ -44,8 +47,8 @@ public class ColorSensor extends SubsystemBase {
 
   }
 
-  public Color getColor() {
-    return mColorSensor.getColor();
+  public String getEstimatedColor() {
+    return mEstimatedColorString;
   }
 
   public String getGameData(){
@@ -75,20 +78,30 @@ public class ColorSensor extends SubsystemBase {
     ColorMatchResult mMatch = mColorMatcher.matchClosestColor(mColorSensor.getColor());
 
     if (mMatch.color == kRedTarget) {
-      mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "blue"));
-      mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "red"));
-    } else if (mMatch.color == kGreenTarget) {
-      mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "yellow"));
-      mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "green"));
-    } else if (mMatch.color == kBlueTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "red"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "blue"));
-    } else if (mMatch.color == kYellowTarget) {
+      mEstimatedColorString = "Blue";
+      mObservedColorString = "Red";
+    } else if (mMatch.color == kGreenTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "green"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "yellow"));
+      mEstimatedColorString = "Yellow";
+      mObservedColorString = "Green";
+    } else if (mMatch.color == kBlueTarget) {
+      mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "blue"));
+      mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "red"));
+      mEstimatedColorString = "Red";
+      mObservedColorString = "Blue";
+    } else if (mMatch.color == kYellowTarget) {
+      mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "yellow"));
+      mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "green"));
+      mEstimatedColorString = "Green";
+      mObservedColorString = "Yellow";
     } else {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "black"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "black"));
+      mEstimatedColorString = "None";
+      mObservedColorString = "None";
     }
 
   }
