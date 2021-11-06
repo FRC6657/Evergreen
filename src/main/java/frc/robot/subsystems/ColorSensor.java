@@ -10,6 +10,7 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SuppliedValueWidget;
 import edu.wpi.first.wpilibj.util.Color;
@@ -45,6 +46,27 @@ public class ColorSensor extends SubsystemBase {
 
   public Color getColor() {
     return mColorSensor.getColor();
+  }
+
+  public String getGameData(){
+    String mRawData = DriverStation.getInstance().getGameSpecificMessage();
+    if(mRawData.length() > 0){
+      switch (mRawData.charAt(0)) {
+        case 'R' :
+          return "Red";
+        case 'G' :
+          return "Blue";
+        case 'B' :
+          return "Blue";
+        case 'Y' :
+          return "Yellow";
+        default :
+          return "Broken Data";
+      }
+    }
+    else {
+      return "No Data";
+    }
   }
 
   @Override
