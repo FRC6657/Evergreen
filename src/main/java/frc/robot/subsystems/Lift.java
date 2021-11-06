@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.SuppliedValueWidget;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -17,9 +19,13 @@ public class Lift extends SubsystemBase {
   private final WPI_TalonSRX mMotor;
   ShuffleboardTab mMotorReadouts;
 
+  private SuppliedValueWidget<Double> mLiftEncoder = Shuffleboard.getTab("Motors")
+      .addNumber("Lift Encoder", () -> getEncoderPosition()).withSize(2,1).withPosition(2, 3);
+
   public Lift() {
 
     mMotor = new WPI_TalonSRX(Constants.kLiftID);
+    mMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
     Shuffleboard.getTab("Motors").add("Lift", mMotor).withSize(2, 1).withPosition(0, 3);
 
@@ -29,8 +35,7 @@ public class Lift extends SubsystemBase {
     mMotor.set(pSpeed);
   }
 
-  @Override
-  public void periodic() {
-
+  public double getEncoderPosition() {
+    return mMotor.getSelectedSensorPosition();
   }
 }

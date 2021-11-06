@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase {
 
     mMotor = new WPI_TalonSRX(Constants.kIntakeID);
 
-    Shuffleboard.getTab("Motors").add("Intake", mMotor).withSize(2, 1).withPosition(2, 3);
+    Shuffleboard.getTab("Motors").add("Intake", mMotor).withSize(2, 1).withPosition(2, 4);
 
   }
 
