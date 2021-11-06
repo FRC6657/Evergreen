@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Blinkin extends SubsystemBase {
   
@@ -18,11 +19,11 @@ public class Blinkin extends SubsystemBase {
 
   public Blinkin() {
     
-    mBlinkin = new Spark(7);
+    mBlinkin = new Spark(Constants.kBlinkinPWM);
     mBlinkin.set(0);
 
     Shuffleboard.getTab("Color")
-    .add("blinkin", mBlinkin)
+    .add("Blinkin", mBlinkin)
     .withSize(2, 1)
     .withPosition(0, 0)
     ;
