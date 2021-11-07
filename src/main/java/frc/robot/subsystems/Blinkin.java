@@ -44,4 +44,13 @@ public class Blinkin extends SubsystemBase {
   public void set(double pColor) {
     mBlinkin.set(pColor);
   }
+
+  public void set(String pColor){
+    switch(pColor){
+      case "Red": mBlinkin.set(0.61);
+      case "Green": mBlinkin.set(0.77);
+      case "Blue": mBlinkin.set(0.87);
+      case "Yellow": mBlinkin.set(0.69);
+    }
+  }
 }

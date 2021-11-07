@@ -6,7 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -30,12 +33,40 @@ public class RobotContainer {
   private final Joystick mJoystick = new Joystick(0);
   private final XboxController mController = new XboxController(1);
 
+  private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
+
   public RobotContainer() {
     configureButtonBindings();
   }
 
+  private class BaseLine extends SequentialCommandGroup{
+    public BaseLine(){
+      addCommands(
+        new AutonomousDrive(mDrivetrain, 0.4, -0.4).withTimeout(1)
+      );
+    }
+  }
+
+  private class SeekAim extends SequentialCommandGroup{
+    public SeekAim(){
+      addCommands(
+        new SeekTarget(mLimelight, mDrivetrain),
+        new AutoTarget(mLimelight, mDrivetrain)
+      );
+    }
+  }
+
   @SuppressWarnings("unused")
   private void configureButtonBindings() {
+
+    CommandScheduler.getInstance()
+      .setDefaultCommand(mDrivetrain,
+        new DriverControl(
+          mDrivetrain,
+          () -> cubicDeadband(mJoystick.getRawAxis(Joystick.AxisType.kY.value), 1, 0.1),
+          () -> cubicDeadband(mJoystick.getRawAxis(Joystick.AxisType.kTwist.value), 1, 0.1)
+        )
+      );
 
     //Joystick Buttons
     POVButton mJoystickHatRight = new POVButton(mJoystick, 0);
@@ -85,9 +116,9 @@ public class RobotContainer {
     mTopLeft.whenPressed(new LiftToHeight(mLift, mPDP, Constants.kLiftSpeed, 0)
       .withInterrupt(() -> (mBottomLeft.get() || mTopRight.get())));
     mTopRight.whenHeld(new RunLift(mLift, mPDP, Constants.kLiftSpeed));
-    m7.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
+    m7.whenPressed(new MatchColor(mControlPanel, mBlinkin, mColorSensor, Constants.kControlPanelSpinSpeed)
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
-    //TODO: m8 is aimbot
+    m8.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
     m9.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
       .withTimeout(0.1));
     m11.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
@@ -95,24 +126,40 @@ public class RobotContainer {
 
     mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
     mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
-    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, -Constants.ControlPanelSpinSpeed));
-    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, Constants.ControlPanelSpinSpeed));
-
+    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, mBlinkin, mColorSensor, -Constants.ControlPanelSpinSpeed));
+    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, mBlinkin, mColorSensor, Constants.ControlPanelSpinSpeed));
 
     //Controller Bindings
     mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
       .withTimeout(0.1));
-    //TODO: mB is aimbot
-    mY.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
+    mB.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
+    mY.whenPressed(new MatchColor(mControlPanel, mBlinkin, mColorSensor, Constants.kControlPanelSpinSpeed)
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
     mRightBumper.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
 
     mControllerDPadUp.whenPressed(new ChangeCamera(mIntakeCamera));
     mControllerDPadLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
     mControllerDPadRight.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
+
+    mAutoChooser.setDefaultOption("Base Line", new BaseLine());
+    mAutoChooser.addOption("Seek Aim", new SeekAim());
+
+  }
+
+  private double cubicDeadband(double pInput, double pWeight, double pDeadband){
+
+    double output;
+
+    if(Math.abs(pInput) > pDeadband){
+      output = (((pWeight * (Math.pow(pInput, 3)) + 1*(1 - pWeight) * pInput) - (Math.abs(pInput)) / pInput * (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)) / (1 - (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)));
+    }
+    else{
+      output = 0;
+    }
+    return output;
   }
 
   public Command getAutonomousCommand() {
-    return null;
+    return mAutoChooser.getSelected();
   }
 }
