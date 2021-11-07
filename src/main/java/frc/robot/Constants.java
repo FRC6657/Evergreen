@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.I2C;
 
 public final class Constants {
-
+    //IDS
     public final static int kPDPID = 0;
     public final static int kFrontLeft = 1;
     public final static int kBackLeft = 2;
@@ -26,5 +26,14 @@ public final class Constants {
     public final static int kGatePWM = 9;
 
     public final static I2C.Port kColorSensorPort = I2C.Port.kOnboard;
+
+    //Speeds
+    public final static double kOuttakeSpeed = 0.8;
+    public final static double kIntakeSpeed = 0.4;
+    public final static double kLiftSpeed = 1;
+	public final static double kControlPanelSpinSpeed= 0.4;
+	public final static double kAgitatorSpeed = 1;
+	public final static double ControlPanelPivotSpeed = 0.3;
+	public final static double ControlPanelSpinSpeed = 0.4;
 
 }

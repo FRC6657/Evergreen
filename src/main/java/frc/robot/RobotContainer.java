@@ -4,20 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.Agitator;
-import frc.robot.subsystems.Blinkin;
-import frc.robot.subsystems.ColorSensor;
-import frc.robot.subsystems.ControlPanel;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeCamera;
-import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Outtake;
-import frc.robot.subsystems.PDP;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 public class RobotContainer {
 
@@ -33,16 +27,89 @@ public class RobotContainer {
   private final Outtake mOuttake = new Outtake();
   private final PDP mPDP = new PDP();
 
-  private final XboxController mController = new XboxController(0);
+  private final Joystick mJoystick = new Joystick(0);
+  private final XboxController mController = new XboxController(1);
 
   public RobotContainer() {
     configureButtonBindings();
   }
 
+  @SuppressWarnings("unused")
   private void configureButtonBindings() {
 
-    final JoystickButton mA = new JoystickButton(mController, XboxController.Button.kA.value);
+    //Joystick Buttons
+    POVButton mJoystickHatRight = new POVButton(mJoystick, 0);
+    POVButton mJoystickHatUp = new POVButton(mJoystick, 90);
+    POVButton mJoystickHatLeft = new POVButton(mJoystick, 180);
+    POVButton mJoystickHatDown = new POVButton(mJoystick, 270);
 
+    JoystickButton mTrigger = new JoystickButton(mJoystick, 1);
+    JoystickButton mSide = new JoystickButton(mJoystick, 2);
+    JoystickButton mBottomLeft = new JoystickButton(mJoystick, 3);
+    JoystickButton mBottomRight = new JoystickButton(mJoystick, 4);
+    JoystickButton mTopLeft = new JoystickButton(mJoystick, 5);
+    JoystickButton mTopRight = new JoystickButton(mJoystick, 6);
+    JoystickButton m7 = new JoystickButton(mJoystick, 7);
+    JoystickButton m8 = new JoystickButton(mJoystick, 8);
+    JoystickButton m9 = new JoystickButton(mJoystick, 9);
+    JoystickButton m10 = new JoystickButton(mJoystick, 10);
+    JoystickButton m11 = new JoystickButton(mJoystick, 11);
+    JoystickButton m12 = new JoystickButton(mJoystick, 12);
+
+    //Controller Buttons
+    POVButton mControllerDPadRight = new POVButton(mController, 0);
+    POVButton mControllerDPadUp = new POVButton(mController, 90);
+    POVButton mControllerDPadLeft = new POVButton(mController, 180);
+    POVButton mControllerDPadDown = new POVButton(mController, 270);
+
+    JoystickButton mA = new JoystickButton(mController, 1);
+    JoystickButton mB = new JoystickButton(mController, 2);
+    JoystickButton mX = new JoystickButton(mController, 3);
+    JoystickButton mY = new JoystickButton(mController, 4);
+    JoystickButton mLeftBumper = new JoystickButton(mController, 5);
+    JoystickButton mRightBumper = new JoystickButton(mController, 6);
+    JoystickButton mMiddleLeft = new JoystickButton(mController, 7);
+    JoystickButton mMiddleRight = new JoystickButton(mController, 8);
+    JoystickButton mLeftStickPress = new JoystickButton(mController, 9);
+    JoystickButton mRightStickPress = new JoystickButton(mController, 10);
+
+    //TODO: Test all of these
+
+    //Joystick Bindings
+    mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
+    mSide.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
+    //TODO: Get a correct height value/check up&down polarity
+    mBottomLeft.whenPressed(new LiftToHeight(mLift, mPDP, Constants.kLiftSpeed, 30)
+      .withInterrupt(() -> (mBottomLeft.get() || mTopRight.get())));
+    mBottomRight.whenHeld(new RunLift(mLift, mPDP, -Constants.kLiftSpeed));
+    mTopLeft.whenPressed(new LiftToHeight(mLift, mPDP, Constants.kLiftSpeed, 0)
+      .withInterrupt(() -> (mBottomLeft.get() || mTopRight.get())));
+    mTopRight.whenHeld(new RunLift(mLift, mPDP, Constants.kLiftSpeed));
+    m7.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
+      .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
+    //TODO: m8 is aimbot
+    m9.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
+      .withTimeout(0.1));
+    m11.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
+    m12.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
+
+    mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
+    mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
+    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, -Constants.ControlPanelSpinSpeed));
+    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, Constants.ControlPanelSpinSpeed));
+
+
+    //Controller Bindings
+    mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
+      .withTimeout(0.1));
+    //TODO: mB is aimbot
+    mY.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
+      .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
+    mRightBumper.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
+
+    mControllerDPadUp.whenPressed(new ChangeCamera(mIntakeCamera));
+    mControllerDPadLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
+    mControllerDPadRight.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
   }
 
   public Command getAutonomousCommand() {
