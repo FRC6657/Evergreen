@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriverControl extends CommandBase {
-  
+
   private Drivetrain mDrivetrain;
   private DoubleSupplier mDriveInput;
   private DoubleSupplier mTurnInput;
 
   public DriverControl(Drivetrain pDrivetrain, DoubleSupplier pDriveInput, DoubleSupplier pTurnInput) {
-    
+
     mDrivetrain = pDrivetrain;
     mDriveInput = pDriveInput;
     mTurnInput = pTurnInput;

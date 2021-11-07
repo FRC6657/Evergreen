@@ -18,7 +18,6 @@ public class ChangeCamera extends CommandBase {
 
   @Override
   public void initialize() {
-    System.out.println("Command Run");
     mIntakeCamera.changeView();
   }
 }

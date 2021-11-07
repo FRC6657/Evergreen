@@ -33,17 +33,16 @@ public class LiftToHeight extends CommandBase {
     double mMax = 30;
     double mMin = 0;
 
-    if(mSetpoint > mMax){
+    if (mSetpoint > mMax) {
       mSetpoint = mMax;
     }
-    if(mSetpoint < mMin){
+    if (mSetpoint < mMin) {
       mSetpoint = mMin;
     }
 
-    if(mLift.getEncoderPosition() < mSetpoint){
+    if (mLift.getEncoderPosition() < mSetpoint) {
       mLift.run(mSpeed);
-    }
-    else{
+    } else {
       mLift.run(-mSpeed);
     }
   }
@@ -53,13 +52,9 @@ public class LiftToHeight extends CommandBase {
     mLift.run(0);
   }
 
-  
   @Override
   public boolean isFinished() {
-    return (
-      (mPDP.getCurrent(0) > 120) ||
-      (mLift.getEncoderPosition() < Math.abs(mSetpoint) + 0.2) || 
-      (mLift.getEncoderPosition() > Math.abs(mSetpoint) - 0.2)
-    );
+    return ((mPDP.getCurrent(0) > 120) || (mLift.getEncoderPosition() < Math.abs(mSetpoint) + 0.2)
+        || (mLift.getEncoderPosition() > Math.abs(mSetpoint) - 0.2));
   }
 }

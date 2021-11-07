@@ -33,7 +33,7 @@ public class RunLift extends CommandBase {
     mLift.run(0);
   }
 
-  //TODO: Get the channel of the Lift Motor / test stall current
+  // TODO: Get the channel of the Lift Motor / test stall current
   @Override
   public boolean isFinished() {
     return (mPDP.getCurrent(0) > 120);

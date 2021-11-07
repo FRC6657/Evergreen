@@ -9,26 +9,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeCamera extends SubsystemBase {
-  
+
   private Servo mServo;
 
-  //2 Variables for Shuffleboard reasons
+  // 2 Variables for Shuffleboard reasons
   private boolean mViewingIntake = false;
 
   public IntakeCamera() {
-    
+
     mServo = new Servo(Constants.kIntakeCamPWM);
     changeView();
 
   }
 
-  public void changeView(){
+  public void changeView() {
 
-    if(mViewingIntake){
+    if (mViewingIntake) {
       mViewingIntake = false;
       mServo.setAngle(135);
-    }
-    else{
+    } else {
       mViewingIntake = true;
       mServo.setAngle(15);
     }

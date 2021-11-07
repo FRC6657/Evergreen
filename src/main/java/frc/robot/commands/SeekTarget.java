@@ -18,7 +18,7 @@ public class SeekTarget extends CommandBase {
     mLimelight = pLimelight;
     mDrivetrain = pDrivetrain;
 
-    addRequirements(mLimelight,mDrivetrain);
+    addRequirements(mLimelight, mDrivetrain);
 
   }
 

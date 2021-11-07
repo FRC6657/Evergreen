@@ -10,7 +10,7 @@ import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
 
 public class MatchColor extends CommandBase {
-  
+
   private final ControlPanel mControlPanel;
   private final Blinkin mBlinkin;
   private final ColorSensor mColorSensor;
@@ -23,7 +23,7 @@ public class MatchColor extends CommandBase {
     mColorSensor = pColorSensor;
     mSpeed = pSpeed;
 
-    addRequirements(mControlPanel,mColorSensor);
+    addRequirements(mControlPanel, mColorSensor);
   }
 
   @Override

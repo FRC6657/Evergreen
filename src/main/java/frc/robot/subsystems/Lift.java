@@ -20,7 +20,7 @@ public class Lift extends SubsystemBase {
   ShuffleboardTab mMotorReadouts;
 
   private SuppliedValueWidget<Double> mLiftEncoder = Shuffleboard.getTab("Motors")
-      .addNumber("Lift Encoder", () -> getEncoderPosition()).withSize(2,1).withPosition(2, 3);
+      .addNumber("Lift Encoder", () -> getEncoderPosition()).withSize(2, 1).withPosition(2, 3);
 
   public Lift() {
 

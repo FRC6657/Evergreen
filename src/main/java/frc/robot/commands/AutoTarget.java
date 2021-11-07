@@ -9,7 +9,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 
 public class AutoTarget extends CommandBase {
-  
+
   private final Limelight mLimelight;
   private final Drivetrain mDrivetrain;
 
@@ -18,13 +18,13 @@ public class AutoTarget extends CommandBase {
     mLimelight = pLimelight;
     mDrivetrain = pDrivetrain;
 
-    addRequirements(mLimelight,mDrivetrain);
+    addRequirements(mLimelight, mDrivetrain);
 
   }
 
   @Override
   public void execute() {
-    mDrivetrain.comboDrive(mLimelight.getTargetY() * (0.75/20.5), mLimelight.getTargetX() * (0.75/20.5));
+    mDrivetrain.comboDrive(mLimelight.getTargetY() * (0.75 / 20.5), mLimelight.getTargetX() * (0.75 / 20.5));
   }
 
   @Override

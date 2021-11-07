@@ -30,8 +30,10 @@ public class ColorSensor extends SubsystemBase {
   private final Color kBlueTarget = ColorMatch.makeColor(.125, .422, .455);
   private final Color kYellowTarget = ColorMatch.makeColor(.316, .561, .122);
 
-  private SuppliedValueWidget<Boolean> mWidgetCurrentColor = Shuffleboard.getTab("Color").addBoolean("Current Color", () -> true).withPosition(0, 1);
-  private SuppliedValueWidget<Boolean> mWidgetEstimatedColor = Shuffleboard.getTab("Color").addBoolean("Estimated Color", () -> true).withPosition(1, 1);
+  private SuppliedValueWidget<Boolean> mWidgetCurrentColor = Shuffleboard.getTab("Color")
+      .addBoolean("Current Color", () -> true).withPosition(0, 1);
+  private SuppliedValueWidget<Boolean> mWidgetEstimatedColor = Shuffleboard.getTab("Color")
+      .addBoolean("Estimated Color", () -> true).withPosition(1, 1);
 
   private String mEstimatedColorString = "Not Set";
   private String mObservedColorString = "Not Set";
@@ -51,23 +53,26 @@ public class ColorSensor extends SubsystemBase {
     return mEstimatedColorString;
   }
 
-  public String getGameData(){
+  public String getObservedColor() {
+    return mObservedColorString;
+  }
+
+  public String getGameData() {
     String mRawData = DriverStation.getInstance().getGameSpecificMessage();
-    if(mRawData.length() > 0){
+    if (mRawData.length() > 0) {
       switch (mRawData.charAt(0)) {
-        case 'R' :
+        case 'R':
           return "Red";
-        case 'G' :
+        case 'G':
           return "Blue";
-        case 'B' :
+        case 'B':
           return "Blue";
-        case 'Y' :
+        case 'Y':
           return "Yellow";
-        default :
+        default:
           return "Broken Data";
       }
-    }
-    else {
+    } else {
       return "No Data";
     }
   }

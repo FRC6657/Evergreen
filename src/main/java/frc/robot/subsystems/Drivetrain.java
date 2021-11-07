@@ -42,7 +42,7 @@ public class Drivetrain extends SubsystemBase {
     mRightMotors.set(pRightSpeed);
   }
 
-  //TODO: Verify Drive Equations
+  // TODO: Verify Drive Equations
   public void comboDrive(double pXSpeed, double pZRotation) {
     mLeftMotors.set(pXSpeed + pZRotation);
     mRightMotors.set(-pXSpeed + pZRotation);
