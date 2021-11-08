@@ -117,14 +117,15 @@ public class RobotContainer {
     //TODO: Get a correct height value/check up&down polarity
     mBottomRight.whenHeld(new RunLift(mLift, mPDP, -Constants.kLiftSpeed));
     mTopRight.whenHeld(new RunLift(mLift, mPDP, Constants.kLiftSpeed));
+    mTopLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
+    mBottomLeft.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
+
     m7.whenPressed(new MatchColor(mControlPanel, mBlinkin, mColorSensor, Constants.kControlPanelSpinSpeed)
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
     m8.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
     m9.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
       .withTimeout(0.1));
-    m11.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
-    m12.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
-
+    
     mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
     mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
     mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, mBlinkin, mColorSensor, -Constants.ControlPanelSpinSpeed));
