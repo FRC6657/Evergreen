@@ -11,6 +11,7 @@ import oi.limelightvision.limelight.frc.LimeLight;
 import oi.limelightvision.limelight.frc.ControlMode.CamMode;
 import oi.limelightvision.limelight.frc.ControlMode.LedMode;
 
+@SuppressWarnings("unused")
 public class Limelight extends SubsystemBase {
 
   private LimeLight mLimelight;

@@ -15,6 +15,7 @@ public class PDP extends SubsystemBase {
 
     // TODO: Index each motors channel
 
+    @SuppressWarnings("unused")
     public PDP() {
 
         mPDP = new PowerDistributionPanel(0);
@@ -35,10 +36,12 @@ public class PDP extends SubsystemBase {
                 .addNumber("Drivetrain", () -> (getCurrent(0) + getCurrent(0) + getCurrent(0) + getCurrent(0)))
                 .withPosition(2, 1)
                 .withSize(2, 1);
-        SuppliedValueWidget<Double> mIntakeCurrent = Shuffleboard.getTab("PDP").addNumber("Intake", () -> getCurrent(0))
+        SuppliedValueWidget<Double> mIntakeCurrent = Shuffleboard.getTab("PDP")
+                .addNumber("Intake", () -> getCurrent(0))
                 .withPosition(0, 2)
                 .withSize(2, 1);
-        SuppliedValueWidget<Double> mLiftCurrent = Shuffleboard.getTab("PDP").addNumber("Lift", () -> getCurrent(0))
+        SuppliedValueWidget<Double> mLiftCurrent = Shuffleboard.getTab("PDP")
+                .addNumber("Lift", () -> getCurrent(0))
                 .withPosition(2, 2)
                 .withSize(2, 1);
         SuppliedValueWidget<Double> mLimelightCurrent = Shuffleboard.getTab("PDP")
