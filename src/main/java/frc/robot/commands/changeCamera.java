@@ -7,13 +7,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeCamera;
 
-public class changeCamera extends CommandBase {
+public class ChangeCamera extends CommandBase {
   
   //
 
   private final IntakeCamera mIntakeCamera;
 
-  public changeCamera(IntakeCamera pIntakeCamera) {
+  public ChangeCamera(IntakeCamera pIntakeCamera) {
     mIntakeCamera = pIntakeCamera;
     addRequirements(mIntakeCamera);
   }
