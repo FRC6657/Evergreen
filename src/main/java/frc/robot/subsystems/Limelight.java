@@ -53,6 +53,10 @@ public class Limelight extends SubsystemBase {
     return mLimelight.isConnected();
   }
 
+  public boolean onTarget(){
+    return (Math.abs(getTargetX()) < 0.2 && Math.abs(getTargetY()) < 0.2);
+  }
+
   public double getTargetX() {
     return mLimelight.getdegRotationToTarget();
   }

@@ -21,6 +21,11 @@ public class RunOuttake extends CommandBase {
   }
 
   @Override
+  public void initialize() {
+    mOuttake.toggleGate(); 
+  }
+
+  @Override
   public void execute() {
     mOuttake.run(mSpeed);
   }
@@ -28,5 +33,6 @@ public class RunOuttake extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     mOuttake.run(0);
+    mOuttake.toggleGate();
   }
 }

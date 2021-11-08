@@ -34,6 +34,6 @@ public class AutoTarget extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return (!mLimelight.isTargetFound() || !mLimelight.isLimelightConnected());
+    return (!mLimelight.isTargetFound() || !mLimelight.isLimelightConnected() || mLimelight.onTarget());
   }
 }
