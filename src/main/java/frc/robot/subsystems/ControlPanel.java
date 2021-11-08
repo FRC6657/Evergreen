@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -14,14 +15,14 @@ import frc.robot.Constants;
 
 public class ControlPanel extends SubsystemBase {
 
-  private final WPI_TalonSRX mPivotMotor;
+  private final WPI_VictorSPX mPivotMotor;
   private final WPI_TalonSRX mSpinMotor;
 
   ShuffleboardTab mMotorReadouts;
 
   public ControlPanel() {
 
-    mPivotMotor = new WPI_TalonSRX(Constants.kControlPanelPivot);
+    mPivotMotor = new WPI_VictorSPX(Constants.kControlPanelPivot);
     mSpinMotor = new WPI_TalonSRX(Constants.kControlPanelSpin);
 
     Shuffleboard.getTab("Motors").add("Control Panel Pivot", mPivotMotor).withSize(2, 1).withPosition(0, 0);
