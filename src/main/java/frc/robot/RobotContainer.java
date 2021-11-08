@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -47,11 +48,15 @@ public class RobotContainer {
     }
   }
 
-  private class SeekAim extends SequentialCommandGroup{
-    public SeekAim(){
+  private class SeekAimShoot extends SequentialCommandGroup{
+    public SeekAimShoot(){
       addCommands(
         new SeekTarget(mLimelight, mDrivetrain),
-        new AutoTarget(mLimelight, mDrivetrain)
+        new AutoTarget(mLimelight, mDrivetrain),
+        new ParallelCommandGroup(
+          new RunOuttake(mOuttake, 0.8),
+          new RunAgitator(mAgitator, 0.4)
+        )
       );
     }
   }
@@ -138,7 +143,7 @@ public class RobotContainer {
     mControllerDPadRight.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
 
     mAutoChooser.setDefaultOption("Base Line", new BaseLine());
-    mAutoChooser.addOption("Seek Aim", new SeekAim());
+    mAutoChooser.addOption("Seek Aim", new SeekAimShoot());
 
   }
 
