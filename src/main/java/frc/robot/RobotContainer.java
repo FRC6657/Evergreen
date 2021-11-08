@@ -110,11 +110,7 @@ public class RobotContainer {
     mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
     mSide.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
     //TODO: Get a correct height value/check up&down polarity
-    mBottomLeft.whenPressed(new LiftToHeight(mLift, mPDP, Constants.kLiftSpeed, 30)
-      .withInterrupt(() -> (mBottomLeft.get() || mTopRight.get())));
     mBottomRight.whenHeld(new RunLift(mLift, mPDP, -Constants.kLiftSpeed));
-    mTopLeft.whenPressed(new LiftToHeight(mLift, mPDP, Constants.kLiftSpeed, 0)
-      .withInterrupt(() -> (mBottomLeft.get() || mTopRight.get())));
     mTopRight.whenHeld(new RunLift(mLift, mPDP, Constants.kLiftSpeed));
     m7.whenPressed(new MatchColor(mControlPanel, mBlinkin, mColorSensor, Constants.kControlPanelSpinSpeed)
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
