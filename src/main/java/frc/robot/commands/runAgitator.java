@@ -7,12 +7,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Agitator;
 
-public class RunAgitator extends CommandBase {
+public class runAgitator extends CommandBase {
+
+  //
 
   private final Agitator mAgitator;
   private final double mSpeed;
 
-  public RunAgitator(Agitator pAgitator, double pSpeed) {
+  public runAgitator(Agitator pAgitator, double pSpeed) {
 
     mSpeed = pSpeed;
     mAgitator = pAgitator;

@@ -121,8 +121,8 @@ public class RobotContainer {
     m8.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
     m9.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
       .withTimeout(0.1));
-    m11.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
-    m12.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
+    m11.whenHeld(new runAgitator(mAgitator, -Constants.kAgitatorSpeed));
+    m12.whenHeld(new runAgitator(mAgitator, Constants.kAgitatorSpeed));
 
     mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
     mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
@@ -137,9 +137,9 @@ public class RobotContainer {
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
     mRightBumper.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
 
-    mControllerDPadUp.whenPressed(new ChangeCamera(mIntakeCamera));
-    mControllerDPadLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
-    mControllerDPadRight.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
+    mControllerDPadUp.whenPressed(new changeCamera(mIntakeCamera));
+    mControllerDPadLeft.whenHeld(new runAgitator(mAgitator, -Constants.kAgitatorSpeed));
+    mControllerDPadRight.whenHeld(new runAgitator(mAgitator, Constants.kAgitatorSpeed));
 
     mAutoChooser.setDefaultOption("Base Line", new BaseLine());
     mAutoChooser.addOption("Seek Aim", new SeekAim());
