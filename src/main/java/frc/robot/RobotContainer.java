@@ -69,10 +69,10 @@ public class RobotContainer {
       );
 
     //Joystick Buttons
-    POVButton mJoystickHatRight = new POVButton(mJoystick, 0);
-    POVButton mJoystickHatUp = new POVButton(mJoystick, 90);
-    POVButton mJoystickHatLeft = new POVButton(mJoystick, 180);
-    POVButton mJoystickHatDown = new POVButton(mJoystick, 270);
+    POVButton mJoystickHatRight = new POVButton(mJoystick, 90);
+    POVButton mJoystickHatUp = new POVButton(mJoystick, 0);
+    POVButton mJoystickHatLeft = new POVButton(mJoystick, 270);
+    POVButton mJoystickHatDown = new POVButton(mJoystick, 180);
 
     JoystickButton mTrigger = new JoystickButton(mJoystick, 1);
     JoystickButton mSide = new JoystickButton(mJoystick, 2);
@@ -88,10 +88,10 @@ public class RobotContainer {
     JoystickButton m12 = new JoystickButton(mJoystick, 12);
 
     //Controller Buttons
-    POVButton mControllerDPadRight = new POVButton(mController, 0);
-    POVButton mControllerDPadUp = new POVButton(mController, 90);
-    POVButton mControllerDPadLeft = new POVButton(mController, 180);
-    POVButton mControllerDPadDown = new POVButton(mController, 270);
+    POVButton mControllerDPadRight = new POVButton(mController, 90);
+    POVButton mControllerDPadUp = new POVButton(mController, 0);
+    POVButton mControllerDPadLeft = new POVButton(mController, 270);
+    POVButton mControllerDPadDown = new POVButton(mController, 180);
 
     JoystickButton mA = new JoystickButton(mController, 1);
     JoystickButton mB = new JoystickButton(mController, 2);
