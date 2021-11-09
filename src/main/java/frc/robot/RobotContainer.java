@@ -20,7 +20,6 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   private final Agitator mAgitator = new Agitator();
-  private final Blinkin mBlinkin = new Blinkin();
   private final ColorSensor mColorSensor = new ColorSensor();
   private final ControlPanel mControlPanel = new ControlPanel();
   private final Drivetrain mDrivetrain = new Drivetrain();
@@ -72,7 +71,6 @@ public class RobotContainer {
           () -> cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1)
         )
       );
-    CommandScheduler.getInstance().setDefaultCommand(mBlinkin, new LightIndicator(mBlinkin, mColorSensor));
 
     //Joystick Buttons
     POVButton mJoystickHatRight = new POVButton(mJoystick, 90);
@@ -129,8 +127,8 @@ public class RobotContainer {
     
     mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
     mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
-    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, mBlinkin, mColorSensor, -Constants.ControlPanelSpinSpeed));
-    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, mBlinkin, mColorSensor, Constants.ControlPanelSpinSpeed));
+    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, mColorSensor, -Constants.ControlPanelSpinSpeed));
+    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, mColorSensor, Constants.ControlPanelSpinSpeed));
 
     //Controller Bindings
     mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)

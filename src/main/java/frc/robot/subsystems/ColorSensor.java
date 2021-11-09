@@ -11,6 +11,7 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SuppliedValueWidget;
 import edu.wpi.first.wpilibj.util.Color;
@@ -21,6 +22,7 @@ import frc.robot.Constants;
 public class ColorSensor extends SubsystemBase {
 
   private final ColorSensorV3 mColorSensor;
+  private Spark mBlinkin;
 
   private final ColorMatch mColorMatcher = new ColorMatch();
 
@@ -51,6 +53,33 @@ public class ColorSensor extends SubsystemBase {
     mColorMatcher.addColorMatch(kBlueTarget);
     mColorMatcher.addColorMatch(kYellowTarget);
 
+    mBlinkin = new Spark(Constants.kBlinkinPWM);
+    mBlinkin.set(0.93);
+
+    Shuffleboard.getTab("Color").add("Blinkin", mBlinkin).withSize(2, 1).withPosition(0, 0);
+
+
+  }
+
+    /**
+   * <b>Important Values</b>
+   * <p>
+   * RED: 0.61
+   * <p>
+   * YELLOW: 0.69
+   * <p>
+   * BLUE: 0.87
+   * <p>
+   * GREEN: 0.77
+   * <p>
+   * 
+   * @param pColor Desired Color Value | Range: (-1,1)
+   *
+   * @see https://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf
+   * 
+   */
+  public void set(double pColor) {
+    mBlinkin.set(pColor);
   }
 
   public String getEstimatedColor() {
@@ -103,26 +132,31 @@ public class ColorSensor extends SubsystemBase {
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "blue"));
       mEstimatedColorString = "Blue";
       mObservedColorString = "Red";
+      mBlinkin.set(0.61);
     } else if (mMatch.color == kGreenTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "green"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "yellow"));
       mEstimatedColorString = "Yellow";
       mObservedColorString = "Green";
+      mBlinkin.set(0.77);
     } else if (mMatch.color == kBlueTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "blue"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "red"));
       mEstimatedColorString = "Red";
       mObservedColorString = "Blue";
+      mBlinkin.set(0.87);
     } else if (mMatch.color == kYellowTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "yellow"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "green"));
       mEstimatedColorString = "Green";
       mObservedColorString = "Yellow";
+      mBlinkin.set(0.69);
     } else {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "black"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "black"));
       mEstimatedColorString = "None";
       mObservedColorString = "None";
+      mBlinkin.set(0.93);
     }
   }
 }

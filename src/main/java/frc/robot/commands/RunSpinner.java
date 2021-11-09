@@ -5,22 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
 
 public class RunSpinner extends CommandBase {
 
   private final ControlPanel mControlPanel;
-  private final Blinkin mBlinkin;
   private final ColorSensor mColorSensor;
   private final double mSpeed;
 
-  public RunSpinner(ControlPanel pControlPanel, Blinkin pBlinkin, ColorSensor pColorSensor, double pSpeed) {
+  public RunSpinner(ControlPanel pControlPanel, ColorSensor pColorSensor, double pSpeed) {
 
     mSpeed = pSpeed;
     mControlPanel = pControlPanel;
-    mBlinkin = pBlinkin;
     mColorSensor = pColorSensor;
 
     addRequirements(mControlPanel);
@@ -29,7 +26,6 @@ public class RunSpinner extends CommandBase {
   @Override
   public void execute() {
     mControlPanel.spin(mSpeed);
-    mBlinkin.set(mColorSensor.getEstimatedColor());
   }
 
   @Override
