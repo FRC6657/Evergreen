@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-
 @SuppressWarnings("unused")
 public class Lift extends SubsystemBase {
 
   private final WPI_TalonSRX mMotor;
   ShuffleboardTab mMotorReadouts;
+  private static double maxAmperage = 0;
 
   public Lift() {
 
@@ -35,4 +35,13 @@ public class Lift extends SubsystemBase {
   public void run(double pSpeed) {
     mMotor.set(pSpeed);
   }
+
+  public static void setMaxAmp(double maxAmp) {
+    maxAmperage = maxAmp;
+  }
+
+  public static double getMaxAmp() {
+    return maxAmperage;
+  }
+
 }
