@@ -14,12 +14,14 @@ public class DriverControl extends CommandBase {
   private Drivetrain mDrivetrain;
   private DoubleSupplier mDriveInput;
   private DoubleSupplier mTurnInput;
+  private DoubleSupplier mDirection;
 
-  public DriverControl(Drivetrain pDrivetrain, DoubleSupplier pDriveInput, DoubleSupplier pTurnInput) {
+  public DriverControl(Drivetrain pDrivetrain, DoubleSupplier pDriveInput, DoubleSupplier pTurnInput, DoubleSupplier pDirection) {
 
     mDrivetrain = pDrivetrain;
     mDriveInput = pDriveInput;
     mTurnInput = pTurnInput;
+    mDirection = pDirection;
 
     addRequirements(mDrivetrain);
 
@@ -27,7 +29,12 @@ public class DriverControl extends CommandBase {
 
   @Override
   public void execute() {
-    mDrivetrain.comboDrive(mDriveInput.getAsDouble(), mTurnInput.getAsDouble());
+    if(mDirection.getAsDouble() > 0){
+      mDrivetrain.comboDrive(mDriveInput.getAsDouble(), mTurnInput.getAsDouble());
+    }
+    else{
+      mDrivetrain.comboDrive(mDriveInput.getAsDouble(), mTurnInput.getAsDouble());
+    }
   }
 
   @Override

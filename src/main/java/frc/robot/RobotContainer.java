@@ -68,7 +68,8 @@ public class RobotContainer {
         new DriverControl(
           mDrivetrain,
           () -> cubicDeadband(mJoystick.getRawAxis(1), 1, 0.1),
-          () -> cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1)
+          () -> cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1),
+          () -> mJoystick.getRawAxis(4)
         )
       );
 
@@ -108,7 +109,7 @@ public class RobotContainer {
     JoystickButton mLeftStickPress = new JoystickButton(mController, 9);
     JoystickButton mRightStickPress = new JoystickButton(mController, 10);
 
-    //TODO: Test all of these
+    //TODO: Test all of these/Make sure the polarity mirrors the controls
 
     //Joystick Bindings
     mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
@@ -148,15 +149,15 @@ public class RobotContainer {
 
   private double cubicDeadband(double pInput, double pWeight, double pDeadband){
 
-    double output;
+    double mOutput;
 
     if(Math.abs(pInput) > pDeadband){
-      output = (((pWeight * (Math.pow(pInput, 3)) + 1*(1 - pWeight) * pInput) - (Math.abs(pInput)) / pInput * (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)) / (1 - (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)));
+      mOutput = (((pWeight * (Math.pow(pInput, 3)) + 1*(1 - pWeight) * pInput) - (Math.abs(pInput)) / pInput * (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)) / (1 - (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)));
     }
     else{
-      output = 0;
+      mOutput = 0;
     }
-    return output;
+    return mOutput;
   }
 
   public Command getAutonomousCommand() {
