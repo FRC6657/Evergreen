@@ -5,20 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
 
 public class RunSpinner extends CommandBase {
 
   private final ControlPanel mControlPanel;
-  private final ColorSensor mColorSensor;
   private final double mSpeed;
 
-  public RunSpinner(ControlPanel pControlPanel, ColorSensor pColorSensor, double pSpeed) {
+  public RunSpinner(ControlPanel pControlPanel, double pSpeed) {
 
     mSpeed = pSpeed;
     mControlPanel = pControlPanel;
-    mColorSensor = pColorSensor;
 
     addRequirements(mControlPanel);
   }

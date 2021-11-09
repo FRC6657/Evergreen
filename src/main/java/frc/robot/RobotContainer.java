@@ -126,8 +126,8 @@ public class RobotContainer {
     
     mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
     mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
-    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, mColorSensor, -Constants.ControlPanelSpinSpeed));
-    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, mColorSensor, Constants.ControlPanelSpinSpeed));
+    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, -Constants.ControlPanelSpinSpeed));
+    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, Constants.ControlPanelSpinSpeed));
 
     //Controller Bindings
     mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)

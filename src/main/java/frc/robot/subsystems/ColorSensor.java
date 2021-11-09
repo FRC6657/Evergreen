@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
+@SuppressWarnings("unused")
 public class ColorSensor extends SubsystemBase {
 
   private final ColorSensorV3 mColorSensor;
@@ -26,7 +27,6 @@ public class ColorSensor extends SubsystemBase {
 
   private final ColorMatch mColorMatcher = new ColorMatch();
 
-  // TODO: Retune
   private final Color kRedTarget = ColorMatch.makeColor(.533, .338, .128);
   private final Color kGreenTarget = ColorMatch.makeColor(.167, .578, .256);
   private final Color kBlueTarget = ColorMatch.makeColor(.125, .422, .455);

@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SuppliedValueWidget;
@@ -15,8 +13,6 @@ public class PDP extends SubsystemBase {
 
         private PowerDistributionPanel mPDP;
         Boolean firstRun = true;
-
-        // TODO: Index each motors channel
 
         @SuppressWarnings("unused")
         public PDP() {
@@ -49,7 +45,7 @@ public class PDP extends SubsystemBase {
                                 .addNumber("Battery Voltage", () -> getBatteryVoltage()).withPosition(4, 1)
                                 .withSize(2, 1);
                 SuppliedValueWidget<Double> mLiftMaxAmp = Shuffleboard.getTab("PDP")
-                                .addNumber("title", () -> getMaxLiftAmp()).withPosition(4, 2).withSize(2, 1);
+                                .addNumber("Lift Maximum Amperage", () -> getMaxLiftAmp()).withPosition(4, 2).withSize(2, 1);
         }
 
         public double getBatteryVoltage() {
