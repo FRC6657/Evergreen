@@ -132,31 +132,31 @@ public class ColorSensor extends SubsystemBase {
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "blue"));
       mEstimatedColorString = "Blue";
       mObservedColorString = "Red";
-      mBlinkin.set(0.61);
+      mBlinkin.set(0.61); //Red
     } else if (mMatch.color == kGreenTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "green"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "yellow"));
       mEstimatedColorString = "Yellow";
       mObservedColorString = "Green";
-      mBlinkin.set(0.77);
+      mBlinkin.set(0.77); //Green
     } else if (mMatch.color == kBlueTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "blue"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "red"));
       mEstimatedColorString = "Red";
       mObservedColorString = "Blue";
-      mBlinkin.set(0.87);
+      mBlinkin.set(0.87); //Blue
     } else if (mMatch.color == kYellowTarget) {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "yellow"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "green"));
       mEstimatedColorString = "Green";
       mObservedColorString = "Yellow";
-      mBlinkin.set(0.69);
+      mBlinkin.set(0.69); //Yellow
     } else {
       mWidgetCurrentColor.withProperties(Map.of("colorWhenTrue", "black"));
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "black"));
       mEstimatedColorString = "None";
       mObservedColorString = "None";
-      mBlinkin.set(0.93);
+      mBlinkin.set(0.93); //Black
     }
   }
 }
