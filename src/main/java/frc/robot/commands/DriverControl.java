@@ -33,7 +33,7 @@ public class DriverControl extends CommandBase {
       mDrivetrain.comboDrive(mDriveInput.getAsDouble(), mTurnInput.getAsDouble());
     }
     else{
-      mDrivetrain.comboDrive(mDriveInput.getAsDouble(), mTurnInput.getAsDouble());
+      mDrivetrain.comboDrive(-mDriveInput.getAsDouble(), -mTurnInput.getAsDouble());
     }
   }
 
