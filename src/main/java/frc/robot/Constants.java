@@ -31,7 +31,7 @@ public final class Constants {
     public final static double kOuttakeSpeed = 0.8;
     public final static double kIntakeSpeed = 0.4;
     public final static double kLiftSpeed = 1;
-	public final static double kControlPanelSpinSpeed= 0.4;
+	public final static double kControlPanelSpinSpeed= 0.2;
 	public final static double kAgitatorSpeed = 1;
 	public final static double ControlPanelPivotSpeed = 0.3;
 	public final static double ControlPanelSpinSpeed = 0.4;
