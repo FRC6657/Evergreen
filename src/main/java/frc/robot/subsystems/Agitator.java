@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -20,6 +21,8 @@ public class Agitator extends SubsystemBase {
   public Agitator() {
 
     mMotor = new WPI_TalonSRX(Constants.kAgitatorID);
+    
+    mMotor.setNeutralMode(NeutralMode.Brake);
 
     Shuffleboard.getTab("Motors").add("Agitator", mMotor).withSize(2, 1).withPosition(0, 4);
 

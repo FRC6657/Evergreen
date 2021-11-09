@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -24,6 +25,9 @@ public class ControlPanel extends SubsystemBase {
 
     mPivotMotor = new WPI_VictorSPX(Constants.kControlPanelPivot);
     mSpinMotor = new WPI_TalonSRX(Constants.kControlPanelSpin);
+
+    mSpinMotor.setNeutralMode(NeutralMode.Brake);
+    mPivotMotor.setNeutralMode(NeutralMode.Brake);
 
     Shuffleboard.getTab("Motors").add("Control Panel Pivot", mPivotMotor).withSize(2, 1).withPosition(0, 0);
     Shuffleboard.getTab("Motors").add("Control Panel Spin", mSpinMotor).withSize(2, 1).withPosition(2, 0);

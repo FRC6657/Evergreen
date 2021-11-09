@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -24,6 +25,8 @@ public class Lift extends SubsystemBase {
   public Lift() {
 
     mMotor = new WPI_TalonSRX(Constants.kLiftID);
+
+    mMotor.setNeutralMode(NeutralMode.Brake);
 
     Shuffleboard.getTab("Motors").add("Lift", mMotor).withSize(2, 1).withPosition(0, 3);
 

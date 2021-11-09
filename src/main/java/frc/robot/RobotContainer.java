@@ -113,7 +113,6 @@ public class RobotContainer {
     //Joystick Bindings
     mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
     mSide.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
-    //TODO: check up&down polarity
     mBottomRight.whenHeld(new RunLift(mLift, mPDP, Constants.kLiftSpeed));
     mTopRight.whenHeld(new RunLift(mLift, mPDP, -Constants.kLiftSpeed));
     mTopLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));

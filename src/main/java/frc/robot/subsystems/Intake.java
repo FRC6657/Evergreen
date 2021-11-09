@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -20,6 +21,8 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     mMotor = new WPI_TalonSRX(Constants.kIntakeID);
+
+    mMotor.setNeutralMode(NeutralMode.Coast);
 
     Shuffleboard.getTab("Motors").add("Intake", mMotor).withSize(2, 1).withPosition(2, 4);
 
