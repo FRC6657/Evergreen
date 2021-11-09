@@ -22,7 +22,7 @@ public final class Constants {
     public final static int kControlPanelSpin = 11; 
 
     public final static int kIntakeCamPWM = 6;
-    public final static int kBlinkinPWM = 7;
+    public final static int kBlinkinPWM = 5;
     public final static int kGatePWM = 9;
 
     public final static I2C.Port kColorSensorPort = I2C.Port.kOnboard;

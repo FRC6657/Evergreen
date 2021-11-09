@@ -68,10 +68,11 @@ public class RobotContainer {
       .setDefaultCommand(mDrivetrain,
         new DriverControl(
           mDrivetrain,
-          () -> cubicDeadband(mJoystick.getRawAxis(Joystick.AxisType.kY.value), 1, 0.1),
-          () -> cubicDeadband(mJoystick.getRawAxis(Joystick.AxisType.kTwist.value), 1, 0.1)
+          () -> cubicDeadband(mJoystick.getRawAxis(1), 1, 0.1),
+          () -> cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1)
         )
       );
+    CommandScheduler.getInstance().setDefaultCommand(mBlinkin, new LightIndicator(mBlinkin, mColorSensor));
 
     //Joystick Buttons
     POVButton mJoystickHatRight = new POVButton(mJoystick, 90);
@@ -114,13 +115,13 @@ public class RobotContainer {
     //Joystick Bindings
     mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
     mSide.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
-    //TODO: Get a correct height value/check up&down polarity
+    //TODO: check up&down polarity
     mBottomRight.whenHeld(new RunLift(mLift, mPDP, -Constants.kLiftSpeed));
     mTopRight.whenHeld(new RunLift(mLift, mPDP, Constants.kLiftSpeed));
     mTopLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
     mBottomLeft.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
 
-    m7.whenPressed(new MatchColor(mControlPanel, mBlinkin, mColorSensor, Constants.kControlPanelSpinSpeed)
+    m7.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
     m8.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
     m9.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
@@ -135,7 +136,7 @@ public class RobotContainer {
     mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
       .withTimeout(0.1));
     mB.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
-    mY.whenPressed(new MatchColor(mControlPanel, mBlinkin, mColorSensor, Constants.kControlPanelSpinSpeed)
+    mY.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
     mRightBumper.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
 

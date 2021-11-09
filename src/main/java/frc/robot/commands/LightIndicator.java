@@ -5,32 +5,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
 
-public class MatchColor extends CommandBase {
+public class LightIndicator extends CommandBase {
 
-  private final ControlPanel mControlPanel;
+  private final Blinkin mBlinkin;
   private final ColorSensor mColorSensor;
-  private double mSpeed;
 
-  public MatchColor(ControlPanel pControlPanel, ColorSensor pColorSensor, double pSpeed) {
+  public LightIndicator(Blinkin pBlinkin, ColorSensor pColorSensor) {
 
-    mControlPanel = pControlPanel;
+    mBlinkin = pBlinkin;
     mColorSensor = pColorSensor;
-    mSpeed = pSpeed;
-
-    addRequirements(mControlPanel, mColorSensor);
+    addRequirements(mColorSensor);
   }
 
   @Override
   public void execute() {
-    mControlPanel.spin(mSpeed);
+    mBlinkin.set(mColorSensor.getEstimatedColor());
   }
 
   @Override
   public void end(boolean interrupted) {
-    mControlPanel.spin(0);
   }
 
   @Override

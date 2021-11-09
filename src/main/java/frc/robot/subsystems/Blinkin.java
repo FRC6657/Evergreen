@@ -18,7 +18,7 @@ public class Blinkin extends SubsystemBase {
   public Blinkin() {
 
     mBlinkin = new Spark(Constants.kBlinkinPWM);
-    mBlinkin.set(0);
+    mBlinkin.set(0.93);
 
     Shuffleboard.getTab("Color").add("Blinkin", mBlinkin).withSize(2, 1).withPosition(0, 0);
 
