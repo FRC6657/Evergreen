@@ -156,7 +156,7 @@ public class ColorSensor extends SubsystemBase {
       mWidgetEstimatedColor.withProperties(Map.of("colorWhenTrue", "black"));
       mEstimatedColorString = "None";
       mObservedColorString = "None";
-      mBlinkin.set(0.93); //Black
+      mBlinkin.set(0.93); //White
     }
   }
 }
