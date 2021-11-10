@@ -29,8 +29,6 @@ public class ControlPanel extends SubsystemBase {
     mSpinMotor.setNeutralMode(NeutralMode.Brake);
     mPivotMotor.setNeutralMode(NeutralMode.Brake);
 
-    Shuffleboard.getTab("Motors").add("Control Panel Pivot", mPivotMotor).withSize(2, 1).withPosition(0, 0);
-    Shuffleboard.getTab("Motors").add("Control Panel Spin", mSpinMotor).withSize(2, 1).withPosition(2, 0);
 
   }
 
@@ -40,5 +38,10 @@ public class ControlPanel extends SubsystemBase {
 
   public void spin(double pSpeed) {
     mSpinMotor.set(pSpeed);
+  }
+
+  @Override
+  public void periodic() {
+    
   }
 }

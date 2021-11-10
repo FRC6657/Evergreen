@@ -28,8 +28,8 @@ public final class Constants {
     public final static I2C.Port kColorSensorPort = I2C.Port.kOnboard;
 
     //Speeds
-    public final static double kOuttakeSpeed = 0.8;
-    public final static double kIntakeSpeed = 0.4;
+    public final static double kOuttakeSpeed = 0.9;
+    public final static double kIntakeSpeed = 0.6;
     public final static double kLiftSpeed = 1;
 	public final static double kControlPanelSpinSpeed= 0.2;
 	public final static double kAgitatorSpeed = 1;

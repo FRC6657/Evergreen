@@ -24,7 +24,15 @@ public class AutoTarget extends CommandBase {
 
   @Override
   public void execute() {
-    mDrivetrain.comboDrive(mLimelight.getTargetY() * (0.75 / 20.5), mLimelight.getTargetX() * (0.75 / 20.5));
+
+    if(mLimelight.getTargetY() > 0){
+      mDrivetrain.comboDrive(-mLimelight.getTargetY() * (0.5 / 20.5) - 0.1, mLimelight.getTargetX() * (0.5 / 20.5));
+    }
+    else{
+      mDrivetrain.comboDrive(-mLimelight.getTargetY() * (0.5 / 20.5), mLimelight.getTargetX() * (0.5 / 20.5));
+    }
+
+    
   }
 
   @Override
@@ -34,6 +42,6 @@ public class AutoTarget extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return (!mLimelight.isTargetFound() || !mLimelight.isLimelightConnected() || mLimelight.onTarget());
+    return false;
   }
 }

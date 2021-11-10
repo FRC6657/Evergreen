@@ -24,7 +24,7 @@ public class SeekTarget extends CommandBase {
 
   @Override
   public void execute() {
-    mDrivetrain.comboDrive(0, 0.4);
+    mDrivetrain.comboDrive(0, 0.35);
   }
 
   @Override

@@ -13,24 +13,34 @@ public class IntakeCamera extends SubsystemBase {
   private Servo mServo;
 
   // 2 Variables for Shuffleboard reasons
-  private boolean mViewingIntake = false;
+  private static boolean mViewingIntake = false;
 
   public IntakeCamera() {
 
     mServo = new Servo(Constants.kIntakeCamPWM);
-    changeView();
+    mServo.setAngle(120);
 
   }
 
   public void changeView() {
 
-    if (mViewingIntake) {
-      mViewingIntake = false;
-      mServo.setAngle(135);
-    } else {
-      mViewingIntake = true;
+    System.out.println("Change View Ran");
+    if(getViewingIntake()){
       mServo.setAngle(15);
+      setViewingIntake(!getViewingIntake());
+    }
+    else {
+      mServo.setAngle(135);
+      setViewingIntake(!getViewingIntake());
     }
 
+  }
+
+  public static boolean getViewingIntake() {
+    return mViewingIntake;
+  }
+
+  public static void setViewingIntake(boolean inVar) {
+    mViewingIntake = inVar;
   }
 }

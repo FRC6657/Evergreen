@@ -51,11 +51,20 @@ public class RobotContainer {
     public SeekAimShoot(){
       addCommands(
         new SeekTarget(mLimelight, mDrivetrain),
-        new AutoTarget(mLimelight, mDrivetrain),
-        new ParallelCommandGroup(
-          new RunOuttake(mOuttake, 0.8),
-          new RunAgitator(mAgitator, 0.4)
-        )
+        new AutoTarget(mLimelight, mDrivetrain).withTimeout(3),
+        new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
+        new RunIntake(mIntake, 1).withTimeout(1),
+        new RunIntake(mIntake, -1).withTimeout(0.05),
+        new RunAgitator(mAgitator, -0.7).withTimeout(1),
+        new RunAgitator(mAgitator, 0.7).withTimeout(1),
+        new RunAgitator(mAgitator, 0).withTimeout(0.5),
+        new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
+        new RunIntake(mIntake, 1).withTimeout(1),
+        new RunIntake(mIntake, -1).withTimeout(0.05),
+        new RunAgitator(mAgitator, 0.7).withTimeout(0.5),
+        new RunAgitator(mAgitator, -0.7).withTimeout(0.5),
+        new RunAgitator(mAgitator, 0).withTimeout(1),
+        new RunOuttake(mOuttake, 0.9).withTimeout(2)
       );
     }
   }
@@ -69,14 +78,14 @@ public class RobotContainer {
           mDrivetrain,
           () -> cubicDeadband(mJoystick.getRawAxis(1), 1, 0.1),
           () -> cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1),
-          () -> mJoystick.getRawAxis(4)
+          () -> mJoystick.getRawAxis(3)
         )
       );
 
     //Joystick Buttons
     POVButton mJoystickHatRight = new POVButton(mJoystick, 90);
     POVButton mJoystickHatUp = new POVButton(mJoystick, 0);
-    POVButton mJoystickHatLeft = new POVButton(mJoystick, 270);
+    POVButton mJoystickHatLeft = new POVButton(mJoystick, -90);
     POVButton mJoystickHatDown = new POVButton(mJoystick, 180);
 
     JoystickButton mTrigger = new JoystickButton(mJoystick, 1);
@@ -138,7 +147,6 @@ public class RobotContainer {
       .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
     mRightBumper.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
 
-    mControllerDPadUp.whenPressed(new ChangeCamera(mIntakeCamera));
     mControllerDPadLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
     mControllerDPadRight.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
 
@@ -161,6 +169,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return mAutoChooser.getSelected();
+    return new SeekAimShoot();
   }
 }

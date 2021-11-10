@@ -36,10 +36,6 @@ public class ColorSensor extends SubsystemBase {
   private SuppliedValueWidget<Boolean> mWidgetEstimatedColor = Shuffleboard.getTab("Color")
       .addBoolean("Estimated Color", () -> true).withPosition(1, 1);
 
-  private SuppliedValueWidget<Double> mWidgetR = Shuffleboard.getTab("Color").addNumber("R Value", () -> getRedValue());
-  private SuppliedValueWidget<Double> mWidgetG = Shuffleboard.getTab("Color").addNumber("G Value", () -> getGreenValue());
-  private SuppliedValueWidget<Double> mWidgetB = Shuffleboard.getTab("Color").addNumber("B Value", () -> getBlueValue());
-
   private String mEstimatedColorString = "Not Set";
   private String mObservedColorString = "Not Set";
 

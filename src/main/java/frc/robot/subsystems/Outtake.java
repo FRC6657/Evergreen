@@ -42,7 +42,7 @@ public class Outtake extends SubsystemBase {
   public void run(double pSpeed) {
 
     mLeftMotor.set(-pSpeed);
-    mRightMotor.set(pSpeed);
+    mRightMotor.set(-pSpeed);
 
   }
 
