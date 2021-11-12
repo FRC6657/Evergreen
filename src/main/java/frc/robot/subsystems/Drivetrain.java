@@ -38,9 +38,6 @@ public class Drivetrain extends SubsystemBase {
     mLeftMotors = new SpeedControllerGroup(mFrontLeft, mBackLeft);
     mRightMotors = new SpeedControllerGroup(mFrontRight, mBackRight);
 
-    Shuffleboard.getTab("Motors").add("Left Drivetrain Motors", mLeftMotors).withSize(2, 1).withPosition(0, 2);
-    Shuffleboard.getTab("Motors").add("Right Drivetrain Motors", mRightMotors).withSize(2, 1).withPosition(2, 2);
-
   }
 
   public void rawDrive(double pLeftSpeed, double pRightSpeed) {

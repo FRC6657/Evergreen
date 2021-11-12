@@ -4,10 +4,14 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,6 +25,17 @@ public class Outtake extends SubsystemBase {
 
   private final Servo mServo;
 
+  private int mLoops = 0;
+  private ShuffleboardTab mDriverstation = Shuffleboard.getTab("Driver Station");
+
+  private NetworkTableEntry mData =
+       mDriverstation.add("Outtake", 0)
+          .withPosition(2, 2)
+          .withSize(2, 2)
+          .withWidget(BuiltInWidgets.kDial)
+          .withProperties(Map.of("showValue", false))
+          .getEntry();
+
   ShuffleboardTab mMotorReadouts;
 
   public Outtake() {
@@ -33,9 +48,6 @@ public class Outtake extends SubsystemBase {
 
     mServo = new Servo(Constants.kGatePWM);
     mServo.setAngle(167);
-
-    Shuffleboard.getTab("Motors").add("Outtake Left", mLeftMotor).withSize(2, 1).withPosition(0, 1);
-    Shuffleboard.getTab("Motors").add("Outtake Right", mRightMotor).withSize(2, 1).withPosition(2, 1);
 
   }
 
@@ -52,6 +64,15 @@ public class Outtake extends SubsystemBase {
     }
     else{
       mServo.setAngle(167);
+    }
+  }
+
+  @Override
+  public void periodic() {
+    mLoops += 1;
+    if(mLoops == 5){
+      mLoops = 0;
+      mData.setNumber(mRightMotor.get()*100);
     }
   }
 }

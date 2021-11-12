@@ -6,19 +6,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.PDP;
 
 public class RunLift extends CommandBase {
 
   private final Lift mLift;
-  private final PDP mPDP;
   private final double mSpeed;
 
-  public RunLift(Lift pLift, PDP pPDP, double pSpeed) {
+  public RunLift(Lift pLift, double pSpeed) {
 
     mSpeed = pSpeed;
     mLift = pLift;
-    mPDP = pPDP;
 
     addRequirements(mLift);
   }
@@ -31,11 +28,5 @@ public class RunLift extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     mLift.run(0);
-  }
-
-  // TODO: test stall current
-  @Override
-  public boolean isFinished() {
-    return (mPDP.getCurrent(13) > 120);
   }
 }

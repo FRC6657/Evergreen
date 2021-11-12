@@ -16,11 +16,6 @@ public class Limelight extends SubsystemBase {
 
   private LimeLight mLimelight;
 
-  private SuppliedValueWidget<Boolean> mVisionEnabled = Shuffleboard.getTab("Vision")
-      .addBoolean("Vision Enabled", () -> (mLimelight.getCamMode().getValue() == 0)).withPosition(0, 0);
-  private SuppliedValueWidget<Boolean> mLightEnabled = Shuffleboard.getTab("Vision")
-      .addBoolean("Light Enabled", () -> (mLimelight.getLEDMode().getValue() == 3)).withPosition(1, 0);
-
   public Limelight() {
     mLimelight = new LimeLight();
   }
