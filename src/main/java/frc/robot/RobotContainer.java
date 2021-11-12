@@ -59,15 +59,15 @@ public class RobotContainer {
     public SeekAimShoot(){
       addCommands(
         new SeekTarget(mLimelight, mDrivetrain),
-        new AutoTarget(mLimelight, mDrivetrain).withTimeout(3),
+        new AutoTarget(mLimelight, mDrivetrain).withTimeout(2),
         new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
-        new RunIntake(mIntake, 1).withTimeout(0.75),
+        new RunIntake(mIntake, 1).withTimeout(0.5),
         new RunIntake(mIntake, -1).withTimeout(0.05),
         new RunAgitator(mAgitator, -0.7).withTimeout(0.5),
         new RunAgitator(mAgitator, 0.7).withTimeout(0.5),
         new RunAgitator(mAgitator, 0).withTimeout(0.5),
         new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
-        new RunIntake(mIntake, 1).withTimeout(0.75),
+        new RunIntake(mIntake, 1).withTimeout(0.5),
         new RunIntake(mIntake, -1).withTimeout(0.05),
         new RunAgitator(mAgitator, 0.7).withTimeout(0.5),
         new RunAgitator(mAgitator, -0.7).withTimeout(0.5),
