@@ -4,18 +4,17 @@
 
 package frc.robot;
 
-import java.util.Map;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -30,7 +29,6 @@ public class RobotContainer {
   private final ControlPanel mControlPanel = new ControlPanel();
   private final Drivetrain mDrivetrain = new Drivetrain();
   private final Intake mIntake = new Intake();
-  private final IntakeCamera mIntakeCamera = new IntakeCamera();
   private final Lift mLift = new Lift();
   private final Limelight mLimelight = new Limelight();
   private final Outtake mOuttake = new Outtake();
@@ -38,7 +36,8 @@ public class RobotContainer {
   private final Joystick mJoystick = new Joystick(0);
   private final XboxController mController = new XboxController(1);
 
-  private final USBCamera mCamera = CameraServer.getInstance.startAutomaticCapture();
+  private final UsbCamera mIntakeCamera = CameraServer.getInstance().startAutomaticCapture();
+  private final HttpCamera mLimelightCamera = new HttpCamera("Limelight", "http://10.66.57.11:5800/");
 
   private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
 
@@ -80,6 +79,8 @@ public class RobotContainer {
 
   @SuppressWarnings("unused")
   private void configureButtonBindings() {
+
+    LiveWindow.disableAllTelemetry();
 
     CommandScheduler.getInstance()
       .setDefaultCommand(mDrivetrain,
@@ -160,7 +161,9 @@ public class RobotContainer {
     mAutoChooser.setDefaultOption("Base Line", new BaseLine());
     mAutoChooser.addOption("Seek Aim", new SeekAimShoot());
 
-    mDriverstation.add(mAutoChooser).withPosition(2, 4).withSize(2, 1);    
+    mDriverstation.add("Autonomous Select", mAutoChooser).withPosition(2, 4).withSize(2, 1);   
+    mDriverstation.add("Intake Camera",mIntakeCamera).withPosition(10, 0).withSize(3,4);
+    mDriverstation.add("Limelight",mLimelightCamera).withPosition(6, 0).withSize(4,4); 
 
   }
 
