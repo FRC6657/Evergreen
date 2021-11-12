@@ -77,7 +77,7 @@ public class RobotContainer {
         new DriverControl(
           mDrivetrain,
           () -> cubicDeadband(mJoystick.getRawAxis(1), 1, 0.1),
-          () -> cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1),
+          () -> -cubicDeadband(mJoystick.getRawAxis(2)*0.7, 1, 0.1),
           () -> mJoystick.getRawAxis(3)
         )
       );

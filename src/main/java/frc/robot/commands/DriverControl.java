@@ -30,7 +30,7 @@ public class DriverControl extends CommandBase {
   @Override
   public void execute() {
     if(mDirection.getAsDouble() > 0){
-      mDrivetrain.comboDrive(mDriveInput.getAsDouble(), mTurnInput.getAsDouble());
+      mDrivetrain.comboDrive(mDriveInput.getAsDouble(), -mTurnInput.getAsDouble());
     }
     else{
       mDrivetrain.comboDrive(-mDriveInput.getAsDouble(), -mTurnInput.getAsDouble());
