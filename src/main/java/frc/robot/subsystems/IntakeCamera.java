@@ -12,7 +12,7 @@ public class IntakeCamera extends SubsystemBase {
 
   private Servo mServo;
 
-  private boolean mViewingIntake = false;
+  private boolean mViewingIntake = true;
 
   public IntakeCamera() {
 

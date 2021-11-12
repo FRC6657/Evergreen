@@ -49,7 +49,7 @@ public class Lift extends SubsystemBase {
     mLoops += 1;
     if(mLoops == 5){
       mLoops = 0;
-      mData.setNumber(mMotor.get());
+      mData.setNumber(mMotor.get()*100);
     }
   }
 }
