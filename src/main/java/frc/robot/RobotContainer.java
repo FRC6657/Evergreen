@@ -33,6 +33,8 @@ public class RobotContainer {
   private final Joystick mJoystick = new Joystick(0);
   private final XboxController mController = new XboxController(1);
 
+  private final USBCamera mCamera = CameraServer.getInstance.startAutomaticCapture();
+
   private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
 
   public RobotContainer() {
@@ -53,18 +55,18 @@ public class RobotContainer {
         new SeekTarget(mLimelight, mDrivetrain),
         new AutoTarget(mLimelight, mDrivetrain).withTimeout(3),
         new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
-        new RunIntake(mIntake, 1).withTimeout(1),
+        new RunIntake(mIntake, 1).withTimeout(0.75),
         new RunIntake(mIntake, -1).withTimeout(0.05),
-        new RunAgitator(mAgitator, -0.7).withTimeout(1),
-        new RunAgitator(mAgitator, 0.7).withTimeout(1),
+        new RunAgitator(mAgitator, -0.7).withTimeout(0.5),
+        new RunAgitator(mAgitator, 0.7).withTimeout(0.5),
         new RunAgitator(mAgitator, 0).withTimeout(0.5),
         new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
-        new RunIntake(mIntake, 1).withTimeout(1),
+        new RunIntake(mIntake, 1).withTimeout(0.75),
         new RunIntake(mIntake, -1).withTimeout(0.05),
         new RunAgitator(mAgitator, 0.7).withTimeout(0.5),
         new RunAgitator(mAgitator, -0.7).withTimeout(0.5),
         new RunAgitator(mAgitator, 0).withTimeout(1),
-        new RunOuttake(mOuttake, 0.9).withTimeout(2)
+        new RunOuttake(mOuttake, 0.9).withTimeout(1.5)
       );
     }
   }
@@ -85,7 +87,7 @@ public class RobotContainer {
     //Joystick Buttons
     POVButton mJoystickHatRight = new POVButton(mJoystick, 90);
     POVButton mJoystickHatUp = new POVButton(mJoystick, 0);
-    POVButton mJoystickHatLeft = new POVButton(mJoystick, -90);
+    POVButton mJoystickHatLeft = new POVButton(mJoystick, 270);
     POVButton mJoystickHatDown = new POVButton(mJoystick, 180);
 
     JoystickButton mTrigger = new JoystickButton(mJoystick, 1);
