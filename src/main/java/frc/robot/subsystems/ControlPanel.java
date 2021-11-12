@@ -4,10 +4,14 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +23,23 @@ public class ControlPanel extends SubsystemBase {
   private final WPI_VictorSPX mPivotMotor;
   private final WPI_TalonSRX mSpinMotor;
 
-  ShuffleboardTab mMotorReadouts;
+  private int mLoops = 0;
+  private ShuffleboardTab mDriverstation = Shuffleboard.getTab("Driver Station");
+
+  private NetworkTableEntry mPivotData =
+    mDriverstation.add("Pivot", 0)
+      .withPosition(2, 0)
+      .withSize(2, 2)
+      .withWidget(BuiltInWidgets.kDial)
+      .withProperties(Map.of("showValue", false, "min", -100))
+      .getEntry();
+  private NetworkTableEntry mSpinData =
+      mDriverstation.add("Spin", 0)
+        .withPosition(4, 0)
+        .withSize(2, 2)
+        .withWidget(BuiltInWidgets.kDial)
+        .withProperties(Map.of("showValue", false, "min", -100))
+        .getEntry();
 
   public ControlPanel() {
 
@@ -29,9 +49,6 @@ public class ControlPanel extends SubsystemBase {
     mSpinMotor.setNeutralMode(NeutralMode.Brake);
     mPivotMotor.setNeutralMode(NeutralMode.Brake);
 
-    Shuffleboard.getTab("Motors").add("Control Panel Pivot", mPivotMotor).withSize(2, 1).withPosition(0, 0);
-    Shuffleboard.getTab("Motors").add("Control Panel Spin", mSpinMotor).withSize(2, 1).withPosition(2, 0);
-
   }
 
   public void pivot(double pSpeed) {
@@ -40,5 +57,15 @@ public class ControlPanel extends SubsystemBase {
 
   public void spin(double pSpeed) {
     mSpinMotor.set(pSpeed);
+  }
+
+  @Override
+  public void periodic() {
+    mLoops += 1;
+    if(mLoops == 5){
+      mLoops = 0;
+      mPivotData.setNumber(mPivotMotor.get() * 100);
+      mSpinData.setNumber(mSpinMotor.get() * 100);
+    }
   }
 }

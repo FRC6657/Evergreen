@@ -4,8 +4,14 @@
 
 package frc.robot;
 
+import java.util.Map;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -28,12 +34,13 @@ public class RobotContainer {
   private final Lift mLift = new Lift();
   private final Limelight mLimelight = new Limelight();
   private final Outtake mOuttake = new Outtake();
-  private final PDP mPDP = new PDP();
 
   private final Joystick mJoystick = new Joystick(0);
   private final XboxController mController = new XboxController(1);
 
   private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
+
+  private ShuffleboardTab mDriverstation = Shuffleboard.getTab("Driver Station");
 
   public RobotContainer() {
     configureButtonBindings();
@@ -109,13 +116,11 @@ public class RobotContainer {
     JoystickButton mLeftStickPress = new JoystickButton(mController, 9);
     JoystickButton mRightStickPress = new JoystickButton(mController, 10);
 
-    //TODO: Test all of these/Make sure the polarity mirrors the controls
-
     //Joystick Bindings
     mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
     mSide.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
-    mBottomRight.whenHeld(new RunLift(mLift, mPDP, Constants.kLiftSpeed));
-    mTopRight.whenHeld(new RunLift(mLift, mPDP, -Constants.kLiftSpeed));
+    mBottomRight.whenHeld(new RunLift(mLift, Constants.kLiftSpeed));
+    mTopRight.whenHeld(new RunLift(mLift, -Constants.kLiftSpeed));
     mTopLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
     mBottomLeft.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
 
@@ -144,6 +149,8 @@ public class RobotContainer {
 
     mAutoChooser.setDefaultOption("Base Line", new BaseLine());
     mAutoChooser.addOption("Seek Aim", new SeekAimShoot());
+
+    mDriverstation.add(mAutoChooser).withPosition(2, 4).withSize(2, 1);    
 
   }
 

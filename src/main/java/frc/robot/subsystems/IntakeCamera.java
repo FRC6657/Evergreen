@@ -12,7 +12,6 @@ public class IntakeCamera extends SubsystemBase {
 
   private Servo mServo;
 
-  // 2 Variables for Shuffleboard reasons
   private boolean mViewingIntake = false;
 
   public IntakeCamera() {
