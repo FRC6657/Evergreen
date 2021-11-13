@@ -87,8 +87,9 @@ public class RobotContainer {
         new DriverControl(
           mDrivetrain,
           () -> cubicDeadband(mJoystick.getRawAxis(1), 1, 0.1),
-          () -> -cubicDeadband(mJoystick.getRawAxis(2)*0.7, 1, 0.1),
-          () -> mJoystick.getRawAxis(3)
+          () -> -cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1),
+          () -> mJoystick.getRawAxis(3),
+          () -> mJoystick.getRawButton(1)
         )
       );
 
@@ -98,7 +99,6 @@ public class RobotContainer {
     POVButton mJoystickHatLeft = new POVButton(mJoystick, 270);
     POVButton mJoystickHatDown = new POVButton(mJoystick, 180);
 
-    JoystickButton mTrigger = new JoystickButton(mJoystick, 1);
     JoystickButton mSide = new JoystickButton(mJoystick, 2);
     JoystickButton mBottomLeft = new JoystickButton(mJoystick, 3);
     JoystickButton mBottomRight = new JoystickButton(mJoystick, 4);
@@ -129,7 +129,6 @@ public class RobotContainer {
     JoystickButton mRightStickPress = new JoystickButton(mController, 10);
 
     //Joystick Bindings
-    mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
     mSide.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
     mBottomRight.whenHeld(new RunLift(mLift, Constants.kLiftSpeed));
     mTopRight.whenHeld(new RunLift(mLift, -Constants.kLiftSpeed));
@@ -144,8 +143,7 @@ public class RobotContainer {
     
     mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
     mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
-    mJoystickHatLeft.whenHeld(new RunSpinner(mControlPanel, -Constants.ControlPanelSpinSpeed));
-    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, Constants.ControlPanelSpinSpeed));
+    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, Constants.kControlPanelSpinSpeed));
 
     //Controller Bindings
     mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)

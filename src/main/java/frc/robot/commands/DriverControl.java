@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -15,13 +16,15 @@ public class DriverControl extends CommandBase {
   private DoubleSupplier mDriveInput;
   private DoubleSupplier mTurnInput;
   private DoubleSupplier mDirection;
+  private BooleanSupplier mTurbo;
 
-  public DriverControl(Drivetrain pDrivetrain, DoubleSupplier pDriveInput, DoubleSupplier pTurnInput, DoubleSupplier pDirection) {
+  public DriverControl(Drivetrain pDrivetrain, DoubleSupplier pDriveInput, DoubleSupplier pTurnInput, DoubleSupplier pDirection, BooleanSupplier pTurbo) {
 
     mDrivetrain = pDrivetrain;
     mDriveInput = pDriveInput;
     mTurnInput = pTurnInput;
     mDirection = pDirection;
+    mTurbo = pTurbo;
 
     addRequirements(mDrivetrain);
 
@@ -30,10 +33,20 @@ public class DriverControl extends CommandBase {
   @Override
   public void execute() {
     if(mDirection.getAsDouble() > 0){
-      mDrivetrain.comboDrive(mDriveInput.getAsDouble(), -mTurnInput.getAsDouble());
+      if(mTurbo.getAsBoolean()){
+        mDrivetrain.comboDrive(mDriveInput.getAsDouble() * 1, mTurnInput.getAsDouble() * 0.9);
+      }
+      else{
+        mDrivetrain.comboDrive(mDriveInput.getAsDouble() * 0.6, mTurnInput.getAsDouble() * 0.6);
+      }
     }
     else{
-      mDrivetrain.comboDrive(-mDriveInput.getAsDouble(), -mTurnInput.getAsDouble());
+      if(mTurbo.getAsBoolean()){
+        mDrivetrain.comboDrive(-mDriveInput.getAsDouble() * 1, -mTurnInput.getAsDouble() * 0.9);
+      }
+      else{
+        mDrivetrain.comboDrive(-mDriveInput.getAsDouble() * 0.6, -mTurnInput.getAsDouble() * 0.6);
+      }
     }
   }
 
