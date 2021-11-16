@@ -27,13 +27,6 @@ public class Lift extends SubsystemBase {
   private int mLoops = 0;
   private ShuffleboardTab mDriverstation = Shuffleboard.getTab("Driver Station");
 
-  private NetworkTableEntry mData = mDriverstation
-    .add("Lift", 0)
-      .withPosition(4, 2)
-      .withSize(2, 2)
-      .withWidget(BuiltInWidgets.kDial)
-      .withProperties(Map.of("showValue", false, "min", -100))
-      .getEntry();
 
   public Lift() {
     mMotor = new WPI_TalonSRX(Constants.kLiftID);
@@ -49,7 +42,7 @@ public class Lift extends SubsystemBase {
     mLoops += 1;
     if(mLoops == 5){
       mLoops = 0;
-      mData.setNumber(mMotor.get()*100);
+      //mData.setNumber(mMotor.get()*100);
     }
   }
 }

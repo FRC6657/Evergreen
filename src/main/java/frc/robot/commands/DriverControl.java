@@ -34,19 +34,19 @@ public class DriverControl extends CommandBase {
   public void execute() {
     if(mDirection.getAsDouble() > 0){
       if(mTurbo.getAsBoolean()){
-        mDrivetrain.comboDrive(mDriveInput.getAsDouble() * 1, mTurnInput.getAsDouble() * 0.9);
+        mDrivetrain.comboDrive(mDriveInput.getAsDouble() * 1, mTurnInput.getAsDouble() * 0.5);
       }
       else{
-        mDrivetrain.comboDrive(mDriveInput.getAsDouble() * 0.6, mTurnInput.getAsDouble() * 0.6);
+        mDrivetrain.comboDrive(mDriveInput.getAsDouble() * 0.6, mTurnInput.getAsDouble() * 0.5);
       }
     }
     else{
       if(mTurbo.getAsBoolean()){
-        mDrivetrain.comboDrive(-mDriveInput.getAsDouble() * 1, -mTurnInput.getAsDouble() * 0.9);
+        mDrivetrain.comboDrive(-mDriveInput.getAsDouble() * 1, -mTurnInput.getAsDouble() * 0.5);
       }
       else{
-        mDrivetrain.comboDrive(-mDriveInput.getAsDouble() * 0.6, -mTurnInput.getAsDouble() * 0.6);
-      }
+        mDrivetrain.comboDrive(-mDriveInput.getAsDouble() * 0.6, -mTurnInput.getAsDouble() * 0.5);
+      } 
     }
   }
 

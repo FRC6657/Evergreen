@@ -4,17 +4,19 @@
 
 package frc.robot;
 
+import com.fasterxml.jackson.core.Base64Variant;
+
 import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -25,8 +27,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   private final Agitator mAgitator = new Agitator();
-  private final ColorSensor mColorSensor = new ColorSensor();
-  private final ControlPanel mControlPanel = new ControlPanel();
+
   private final Drivetrain mDrivetrain = new Drivetrain();
   private final Intake mIntake = new Intake();
   private final Lift mLift = new Lift();
@@ -36,69 +37,60 @@ public class RobotContainer {
   private final Joystick mJoystick = new Joystick(0);
   private final XboxController mController = new XboxController(1);
 
-  private final UsbCamera mIntakeCamera = CameraServer.getInstance().startAutomaticCapture();
-  private final HttpCamera mLimelightCamera = new HttpCamera("Limelight", "http://10.66.57.11:5800/");
-
   private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
 
-  private ShuffleboardTab mDriverstation = Shuffleboard.getTab("Driver Station");
+  private ShuffleboardTab mTab = Shuffleboard.getTab("Driver Station");
+
+  private final UsbCamera mCamera = CameraServer.getInstance().startAutomaticCapture();
+  private final HttpCamera mLimelightCamera = new HttpCamera("Limelight", "http://10.66.57.11:5800");
 
   public RobotContainer() {
     configureButtonBindings();
   }
 
-  private class BaseLine extends SequentialCommandGroup{
-    public BaseLine(){
-      addCommands(
-        new AutonomousDrive(mDrivetrain, 0.4, -0.4).withTimeout(1)
-      );
+  private class BaseLine extends SequentialCommandGroup {
+    public BaseLine() {
+      addCommands(new AutonomousDrive(mDrivetrain, 0.4, -0.4).withTimeout(1));
     }
   }
 
-  private class SeekAimShoot extends SequentialCommandGroup{
-    public SeekAimShoot(){
+  private class BaseLineShoot extends SequentialCommandGroup {
+    public BaseLineShoot() {
       addCommands(
-        new SeekTarget(mLimelight, mDrivetrain),
-        new AutoTarget(mLimelight, mDrivetrain).withTimeout(2),
-        new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
-        new RunIntake(mIntake, 1).withTimeout(0.5),
-        new RunIntake(mIntake, -1).withTimeout(0.05),
-        new RunAgitator(mAgitator, -0.7).withTimeout(0.5),
-        new RunAgitator(mAgitator, 0.7).withTimeout(0.5),
-        new RunAgitator(mAgitator, 0).withTimeout(0.5),
-        new RunOuttake(mOuttake, 0.9).withTimeout(1.5),
-        new RunIntake(mIntake, 1).withTimeout(0.5),
-        new RunIntake(mIntake, -1).withTimeout(0.05),
-        new RunAgitator(mAgitator, 0.7).withTimeout(0.5),
-        new RunAgitator(mAgitator, -0.7).withTimeout(0.5),
-        new RunAgitator(mAgitator, 0).withTimeout(1),
-        new RunOuttake(mOuttake, 0.9).withTimeout(1.5)
-      );
+        new AutonomousDrive(mDrivetrain, -0.4, 0.4).withTimeout(0.85),
+        new  ParallelCommandGroup(
+          new RunOuttake(mOuttake, 0.8), 
+          new RunAgitator(mAgitator, -0.4),
+          new RunIntake(mIntake, 0.4)).withTimeout(5));
+    }
+  }
+
+  private class SeekAimShoot extends SequentialCommandGroup {
+    public SeekAimShoot() {
+      addCommands(new AutonomousDrive(mDrivetrain, -0.4, 0.4).withTimeout(1), new SeekTarget(mLimelight, mDrivetrain),
+          new AutoTarget(mLimelight, mDrivetrain).withTimeout(3),
+          new ParallelCommandGroup(
+            new RunOuttake(mOuttake, 0.8), 
+            new RunAgitator(mAgitator, -0.4),
+            new RunIntake(mIntake, 0.4)).withTimeout(5));
     }
   }
 
   @SuppressWarnings("unused")
   private void configureButtonBindings() {
 
-    LiveWindow.disableAllTelemetry();
+    CommandScheduler.getInstance().setDefaultCommand(mDrivetrain,
+        new DriverControl(mDrivetrain, () -> -cubicDeadband(mJoystick.getRawAxis(1), 0, 0.1),
+            () -> cubicDeadband(mJoystick.getRawAxis(2), 0, 0.1), () -> mJoystick.getRawAxis(3),
+            () -> mJoystick.getRawButton(1)));
 
-    CommandScheduler.getInstance()
-      .setDefaultCommand(mDrivetrain,
-        new DriverControl(
-          mDrivetrain,
-          () -> cubicDeadband(mJoystick.getRawAxis(1), 1, 0.1),
-          () -> -cubicDeadband(mJoystick.getRawAxis(2), 1, 0.1),
-          () -> mJoystick.getRawAxis(3),
-          () -> mJoystick.getRawButton(1)
-        )
-      );
-
-    //Joystick Buttons
+    // Joystick Buttons
     POVButton mJoystickHatRight = new POVButton(mJoystick, 90);
     POVButton mJoystickHatUp = new POVButton(mJoystick, 0);
     POVButton mJoystickHatLeft = new POVButton(mJoystick, 270);
     POVButton mJoystickHatDown = new POVButton(mJoystick, 180);
 
+    // JoystickButton mTrigger = new JoystickButton(mJoystick, 1);
     JoystickButton mSide = new JoystickButton(mJoystick, 2);
     JoystickButton mBottomLeft = new JoystickButton(mJoystick, 3);
     JoystickButton mBottomRight = new JoystickButton(mJoystick, 4);
@@ -111,7 +103,7 @@ public class RobotContainer {
     JoystickButton m11 = new JoystickButton(mJoystick, 11);
     JoystickButton m12 = new JoystickButton(mJoystick, 12);
 
-    //Controller Buttons
+    // Controller Buttons
     POVButton mControllerDPadRight = new POVButton(mController, 90);
     POVButton mControllerDPadUp = new POVButton(mController, 0);
     POVButton mControllerDPadLeft = new POVButton(mController, 270);
@@ -128,51 +120,51 @@ public class RobotContainer {
     JoystickButton mLeftStickPress = new JoystickButton(mController, 9);
     JoystickButton mRightStickPress = new JoystickButton(mController, 10);
 
-    //Joystick Bindings
+    // TODO: Test all of these/Make sure the polarity mirrors the controls
+
+    // Joystick Bindings
+    // mTrigger.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
     mSide.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
     mBottomRight.whenHeld(new RunLift(mLift, Constants.kLiftSpeed));
     mTopRight.whenHeld(new RunLift(mLift, -Constants.kLiftSpeed));
     mTopLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
     mBottomLeft.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
 
-    m7.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
-      .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
-    m8.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
-    m9.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
-      .withTimeout(0.1));
-    
-    mJoystickHatUp.whenHeld(new RunPivot(mControlPanel, -Constants.ControlPanelPivotSpeed));
-    mJoystickHatDown.whenHeld(new RunPivot(mControlPanel, Constants.ControlPanelPivotSpeed));
-    mJoystickHatRight.whenHeld(new RunSpinner(mControlPanel, Constants.kControlPanelSpinSpeed));
+    // m7.whenPressed(new MatchColor(mControlPanel, mColorSensor,
+    // Constants.kControlPanelSpinSpeed)
+    // .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
+    //m8.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
+    m9.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed).withTimeout(0.1));
+    mY.whenHeld(new RunIntake(mIntake, Constants.kIntakeSpeed));
 
-    //Controller Bindings
-    mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed)
-      .withTimeout(0.1));
-    mB.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
-    mY.whenPressed(new MatchColor(mControlPanel, mColorSensor, Constants.kControlPanelSpinSpeed)
-      .withInterrupt(() -> (mJoystickHatLeft.get() || mJoystickHatRight.get())));
+    // Controller Bindings
+    mA.whenPressed(new RunIntake(mIntake, -Constants.kIntakeSpeed).withTimeout(0.1));
+    //mB.whenHeld(new AutoTarget(mLimelight, mDrivetrain));
+
     mRightBumper.whenHeld(new RunOuttake(mOuttake, Constants.kOuttakeSpeed));
 
     mControllerDPadLeft.whenHeld(new RunAgitator(mAgitator, -Constants.kAgitatorSpeed));
     mControllerDPadRight.whenHeld(new RunAgitator(mAgitator, Constants.kAgitatorSpeed));
 
-    mAutoChooser.setDefaultOption("Base Line", new BaseLine());
-    mAutoChooser.addOption("Seek Aim", new SeekAimShoot());
+    mAutoChooser.addOption("Base Line", new BaseLine());
+    //mAutoChooser.addOption("Seek Aim", new SeekAimShoot());
+    mAutoChooser.setDefaultOption("Base Line Shoot", new BaseLineShoot());
 
-    mDriverstation.add("Autonomous Select", mAutoChooser).withPosition(2, 4).withSize(2, 1);   
-    mDriverstation.add("Intake Camera",mIntakeCamera).withPosition(10, 0).withSize(3,4);
-    mDriverstation.add("Limelight",mLimelightCamera).withPosition(6, 0).withSize(4,4); 
+    mTab.add("Autonomous", mAutoChooser);
+    mTab.add("Limelight", mLimelightCamera);
+    mTab.add("Intake", mCamera);
 
   }
 
-  private double cubicDeadband(double pInput, double pWeight, double pDeadband){
+  private double cubicDeadband(double pInput, double pWeight, double pDeadband) {
 
     double mOutput;
 
-    if(Math.abs(pInput) > pDeadband){
-      mOutput = (((pWeight * (Math.pow(pInput, 3)) + 1*(1 - pWeight) * pInput) - (Math.abs(pInput)) / pInput * (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)) / (1 - (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)));
-    }
-    else{
+    if (Math.abs(pInput) > pDeadband) {
+      mOutput = (((pWeight * (Math.pow(pInput, 3)) + 1 * (1 - pWeight) * pInput)
+          - (Math.abs(pInput)) / pInput * (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband))
+          / (1 - (pWeight * (Math.pow(pDeadband, 3)) + (1 - pWeight) * pDeadband)));
+    } else {
       mOutput = 0;
     }
     return mOutput;
